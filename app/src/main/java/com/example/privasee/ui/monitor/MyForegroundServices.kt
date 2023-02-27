@@ -12,6 +12,9 @@ import android.os.CountDownTimer
 import android.os.IBinder
 import android.util.Base64
 import android.util.Log
+import android.view.View
+import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
@@ -23,7 +26,6 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.chaquo.python.Python
 import com.chaquo.python.android.AndroidPlatform
 import com.example.privasee.R
-import kotlinx.android.synthetic.main.fragment_monitor.*
 import kotlinx.coroutines.Job
 import java.io.ByteArrayOutputStream
 import java.io.File
@@ -120,6 +122,34 @@ class MyForegroundServices :  LifecycleService() {
 
         //return START_NOT_STICKY
 
+    }
+
+    private fun startTimer() {
+
+        val START_TIME_IN_MILLIS: Long = 600000
+         var mTextViewCountDown: TextView? = null
+         var mButtonStartPause: Button? = null
+         var mButtonReset: Button? = null
+         var mCountDownTimer: CountDownTimer? = null
+         var mTimerRunning = false
+         var mTimeLeftInMillis = START_TIME_IN_MILLIS
+
+        mCountDownTimer = object : CountDownTimer(mTimeLeftInMillis, 1000) {
+            override fun onTick(millisUntilFinished: Long) {
+                mTimeLeftInMillis = millisUntilFinished
+               // updateCountDownText()
+            }
+
+            override fun onFinish() {
+                mTimerRunning = false
+                mButtonStartPause!!.text = "Start"
+                mButtonStartPause!!.visibility = View.INVISIBLE
+                mButtonReset!!.visibility = View.VISIBLE
+            }
+        }.start()
+        mTimerRunning = true
+        mButtonStartPause!!.text = "pause"
+        mButtonReset!!.visibility = View.INVISIBLE
     }
 
     private fun takePhoto(){
