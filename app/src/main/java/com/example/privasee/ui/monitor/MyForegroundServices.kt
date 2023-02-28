@@ -12,9 +12,6 @@ import android.os.CountDownTimer
 import android.os.IBinder
 import android.util.Base64
 import android.util.Log
-import android.view.View
-import android.widget.Button
-import android.widget.TextView
 import android.widget.Toast
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
@@ -23,6 +20,7 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleService
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import androidx.preference.PreferenceManager
 import com.chaquo.python.Python
 import com.chaquo.python.android.AndroidPlatform
 import com.example.privasee.R
@@ -46,6 +44,7 @@ class MyForegroundServices :  LifecycleService() {
     lateinit var job: Job
     lateinit var filelist: MutableList<Bitmap>
 
+
     var isRunning: Boolean = true
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -56,6 +55,7 @@ class MyForegroundServices :  LifecycleService() {
         val snapshotTimer = (intent?.getStringExtra("snapshotTimer"))?.toLong()
         val snapshotTimerLong: Long = TimeUnit.MINUTES.toMillis(snapshotTimer!!)
         startCamera()
+        startTimer()
 
             Thread {
                 while (true) {
@@ -63,7 +63,7 @@ class MyForegroundServices :  LifecycleService() {
                     try {
                         if (snapshotTimerLong != null) {
 
-                            Thread.sleep(30000)
+                            Thread.sleep(snapshotTimerLong)
                             Log.e("Service", "Service is running...")
 
                             if(isRunning){
@@ -126,30 +126,32 @@ class MyForegroundServices :  LifecycleService() {
 
     private fun startTimer() {
 
-        val START_TIME_IN_MILLIS: Long = 600000
-         var mTextViewCountDown: TextView? = null
-         var mButtonStartPause: Button? = null
-         var mButtonReset: Button? = null
+        val sp = PreferenceManager.getDefaultSharedPreferences(this)
+
+         val startTimeInMillis = sp.getLong("theTime", 0)
          var mCountDownTimer: CountDownTimer? = null
          var mTimerRunning = false
-         var mTimeLeftInMillis = START_TIME_IN_MILLIS
+         var mTimeLeftInMillis : Long = TimeUnit.MINUTES.toMillis(startTimeInMillis!!)
 
         mCountDownTimer = object : CountDownTimer(mTimeLeftInMillis, 1000) {
             override fun onTick(millisUntilFinished: Long) {
-                mTimeLeftInMillis = millisUntilFinished
+               //mTimeLeftInMillis = millisUntilFinished
                // updateCountDownText()
+                Log.i("TAG","Countdown seconds remaining:" + millisUntilFinished / 1000);
+
+                intent.putExtra("countdown",millisUntilFinished)
+                sendBroadcastMessage(intent)
+                //sendBroadcast(intent)
+
             }
 
             override fun onFinish() {
                 mTimerRunning = false
-                mButtonStartPause!!.text = "Start"
-                mButtonStartPause!!.visibility = View.INVISIBLE
-                mButtonReset!!.visibility = View.VISIBLE
+                //var devicePolicyManager: DevicePolicyManager? = null
+               // devicePolicyManager!!.lockNow()
             }
         }.start()
         mTimerRunning = true
-        mButtonStartPause!!.text = "pause"
-        mButtonReset!!.visibility = View.INVISIBLE
     }
 
     private fun takePhoto(){
@@ -278,14 +280,15 @@ class MyForegroundServices :  LifecycleService() {
         ) //call main method project_testing
 
         Toast.makeText(this, "$objFinal", Toast.LENGTH_LONG).show()
-        sendBroadcastMessage(objFinal.toString())
+        //sendBroadcastMessage(objFinal.toString())
     }
 
-    private fun sendBroadcastMessage(string: String?) {
-        if (string != null) {
-            val intent = Intent(string)
+    private fun sendBroadcastMessage(intent: Intent) {
+        if (intent != null) {
+            //val intent = Intent(string)
             LocalBroadcastManager.getInstance(this).sendBroadcast(intent)
         }
+        Log.i("TAG","broadcast function");
     }
 
     private fun createDirectoryAndSaveFile(bitmap: Bitmap, string: String) {
@@ -420,5 +423,9 @@ class MyForegroundServices :  LifecycleService() {
         return null
     }
 
+    companion object {
+        val COUNTDOWN_BR = "com.example.privasee.ui.monitor"
+        var intent = Intent(COUNTDOWN_BR)
+    }
 
 }
