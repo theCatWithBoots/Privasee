@@ -10,6 +10,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat.registerReceiver
 import androidx.fragment.app.Fragment
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
@@ -70,6 +72,10 @@ class ControlAccessFragment : Fragment() {
                     Toast.LENGTH_SHORT
                 ).show()
 
+                editor.apply(){
+                    putBoolean("isLockerActive", true)
+                }.apply()
+
             } else {
                 Toast.makeText(
                     requireContext(),
@@ -111,8 +117,6 @@ class ControlAccessFragment : Fragment() {
      override fun onStop() {
         try {
             LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(broadcastReceiver)
-            val sp = PreferenceManager.getDefaultSharedPreferences(requireContext())
-
 
         } catch (e: Exception) {
             // Receiver was probably already
@@ -164,7 +168,7 @@ class ControlAccessFragment : Fragment() {
 
     companion object {
         const val RESULT_ENABLE = 11
-        private var devicePolicyManager: DevicePolicyManager? = null
+        var devicePolicyManager: DevicePolicyManager? = null
         private var activityManager: ActivityManager? = null
         private var compName: ComponentName? = null    }
 }

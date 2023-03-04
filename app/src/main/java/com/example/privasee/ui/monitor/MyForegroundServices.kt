@@ -1,8 +1,10 @@
 package com.example.privasee.ui.monitor
 
+import android.app.AlertDialog
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.admin.DevicePolicyManager
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -12,6 +14,7 @@ import android.os.CountDownTimer
 import android.os.IBinder
 import android.util.Base64
 import android.util.Log
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
@@ -24,6 +27,7 @@ import androidx.preference.PreferenceManager
 import com.chaquo.python.Python
 import com.chaquo.python.android.AndroidPlatform
 import com.example.privasee.R
+import com.example.privasee.ui.controlAccess.ControlAccessFragment
 import kotlinx.coroutines.Job
 import java.io.ByteArrayOutputStream
 import java.io.File
@@ -147,6 +151,16 @@ class MyForegroundServices :  LifecycleService() {
 
             override fun onFinish() {
                 mTimerRunning = false
+
+                val sp = PreferenceManager.getDefaultSharedPreferences(this@MyForegroundServices)
+                if((sp.getBoolean("isLockerActive", false))){
+                    val editor = sp.edit()
+                    editor.apply(){
+                        putBoolean("isLockerActive", false)
+                    }.apply()
+                    ControlAccessFragment.devicePolicyManager!!.lockNow()
+                }
+
                 //var devicePolicyManager: DevicePolicyManager? = null
                // devicePolicyManager!!.lockNow()
             }
@@ -288,7 +302,6 @@ class MyForegroundServices :  LifecycleService() {
             //val intent = Intent(string)
             LocalBroadcastManager.getInstance(this).sendBroadcast(intent)
         }
-        Log.i("TAG","broadcast function");
     }
 
     private fun createDirectoryAndSaveFile(bitmap: Bitmap, string: String) {
@@ -345,21 +358,6 @@ class MyForegroundServices :  LifecycleService() {
         val imageBytes = baos.toByteArray()
         //finally encode to string
         return Base64.encodeToString(imageBytes, Base64.DEFAULT)
-    }
-
-    private fun theTimer(){
-
-        //val textView = findViewById(R.id.RemainingTime) as TextView
-        timer = object : CountDownTimer(25_000, 5_000){
-            override fun onTick(remaining: Long) {
-                //textView.text = remaining.toString()
-                takePhoto()
-            }
-            override fun onFinish() {
-                theTimer()
-            }
-
-        }
     }
 
     private fun startCamera(){
