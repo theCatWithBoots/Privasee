@@ -249,6 +249,7 @@ class AddUserCapturePhoto: AppCompatActivity() {
                 loadingDialog.dismissDialog()
             }
 
+
             var v = sp.getInt("loadingStopCounter", 0).toString()
             imageNumber.setText("$v")
           //  Toast.makeText(this, "$v", Toast.LENGTH_SHORT).show()

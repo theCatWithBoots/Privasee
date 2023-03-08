@@ -76,7 +76,13 @@ class ControlAccessFragment : Fragment() {
                     putBoolean("isLockerActive", true)
                 }.apply()
 
+                timeSet.setText("Timer has been set to $t minute(s)")
+
+                enableFaceLock.setVisibility(View.GONE)
+
             } else {
+                timeSet.setText("You need to enable Admin Permission first")
+
                 Toast.makeText(
                     requireContext(),
                     "You need to enable the Admin Device Features",
@@ -84,6 +90,69 @@ class ControlAccessFragment : Fragment() {
                 ).show()
             }
         }
+
+        cancelTimer.setOnClickListener {
+            val sp = PreferenceManager.getDefaultSharedPreferences(requireContext())
+            val editor = sp.edit()
+
+            if ((sp.getBoolean("isLockerActive", false))) {
+
+                val editor = sp.edit()
+                editor.apply(){
+                    putLong("theTime", 0)
+                }.apply()
+
+                Toast.makeText(
+                    requireContext(),
+                    "Timer has been stopped",
+                    Toast.LENGTH_SHORT
+                ).show()
+
+                editor.apply(){
+                    putBoolean("isLockerActive", false)
+                }.apply()
+
+                timeSet.setText("Timer is not set")
+
+                enableFaceLock.setVisibility(View.VISIBLE)
+
+            } else {
+                Toast.makeText(
+                    requireContext(),
+                    "Timer is not active",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+
+        enableFaceLock.setOnClickListener {
+            val editor = sp.edit()
+
+            editor.apply(){
+                putBoolean("isLockerActive", false)
+            }.apply()
+
+            editor.apply(){
+                putBoolean("isFaceLockActive", true)
+            }.apply()
+
+            faceLockStatus.setText("Face Lock is Active")
+
+            setTimer.setVisibility(View.GONE)
+            enableFaceLock.setVisibility(View.GONE)
+        }
+
+        disableFaceLock.setOnClickListener {
+            val editor = sp.edit()
+
+            editor.apply(){
+                putBoolean("isFaceLockActive", false)
+            }.apply()
+
+            setTimer.setVisibility(View.VISIBLE)
+            enableFaceLock.setVisibility(View.VISIBLE)
+        }
+
         givePermission.setOnClickListener {
             val intent = Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN)
             intent.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, compName)
@@ -134,12 +203,36 @@ class ControlAccessFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        val sp = PreferenceManager.getDefaultSharedPreferences(requireContext())
+        var t = sp.getLong("theTime", 0)
+
+        if((sp.getBoolean("isLockerActive", false))){
+            LocalBroadcastManager.getInstance(requireContext()).registerReceiver(broadcastReceiver, IntentFilter(
+                MyForegroundServices.COUNTDOWN_BR))
+            timeSet.setText("Timer has been set to $t minute(s)")
+            enableFaceLock.setVisibility(View.GONE)
+        }else{
+            timeSet.setText("Timer is not set")
+
+        }
+
+        if((sp.getBoolean("isFaceLockActive", false))){
+            setTimer.setVisibility(View.GONE)
+            enableFaceLock.setVisibility(View.GONE)
+
+            var counter = sp.getInt("flcounter", 0)
+
+            faceLockStatus.setText("Face Lock is Active. Counter: $counter")
+        }else{
+            faceLockStatus.setText("Face Lock is not Active")
+        }
+
       // requireActivity().registerReceiver(broadcastReceiver, IntentFilter())
-        LocalBroadcastManager.getInstance(requireContext()).registerReceiver(broadcastReceiver, IntentFilter(
-            MyForegroundServices.COUNTDOWN_BR))
         val isActive = devicePolicyManager!!.isAdminActive(compName!!)
         disablePermission.setVisibility(if (isActive) View.VISIBLE else View.GONE)
         givePermission.setVisibility(if (isActive) View.GONE else View.VISIBLE)
+
+
     }
 
      override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

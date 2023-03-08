@@ -50,12 +50,12 @@ def project_testing(image, project_training_images, pca):
     min_distance = np.min(distances)
 
     # Define threshold
-    threshold = 2500
+    threshold = 8000
 
 
     if min_distance < threshold:
-        return True, min_distance
+        return True
     else:
-        return False, min_distance
+        return False
 
 

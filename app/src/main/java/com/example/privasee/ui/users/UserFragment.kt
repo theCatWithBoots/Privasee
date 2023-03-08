@@ -1,5 +1,6 @@
 package com.example.privasee.ui.users
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -13,6 +14,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.privasee.R
 import com.example.privasee.database.viewmodel.UserViewModel
 import com.example.privasee.databinding.FragmentUserBinding
+import com.example.privasee.ui.monitor.gallery.SeeSnapshots
+import kotlinx.android.synthetic.main.fragment_user.*
 
 class UserFragment : Fragment() {
 
@@ -45,7 +48,6 @@ class UserFragment : Fragment() {
                 putString("BACK", "addUser")
             }.apply()
         }
-
 
         return binding.root
     }

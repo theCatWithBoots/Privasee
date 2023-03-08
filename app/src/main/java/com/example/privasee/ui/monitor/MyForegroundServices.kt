@@ -47,6 +47,7 @@ class MyForegroundServices :  LifecycleService() {
     private lateinit var cameraExecutor: ExecutorService
     lateinit var job: Job
     lateinit var filelist: MutableList<Bitmap>
+    var faceLockCounter = 0
 
 
     var isRunning: Boolean = true
@@ -59,7 +60,12 @@ class MyForegroundServices :  LifecycleService() {
         val snapshotTimer = (intent?.getStringExtra("snapshotTimer"))?.toLong()
         val snapshotTimerLong: Long = TimeUnit.MINUTES.toMillis(snapshotTimer!!)
         startCamera()
-        startTimer()
+        val sp = PreferenceManager.getDefaultSharedPreferences(this)
+
+        if(sp.getBoolean("isLockerActive", false)){
+            startTimer()
+        }
+
 
             Thread {
                 while (true) {
@@ -294,6 +300,28 @@ class MyForegroundServices :  LifecycleService() {
         ) //call main method project_testing
 
         Toast.makeText(this, "$objFinal", Toast.LENGTH_LONG).show()
+
+        val sp = PreferenceManager.getDefaultSharedPreferences(this)
+        val editor = sp.edit()
+        if((sp.getBoolean("isFaceLockActive", false)) && !objFinal.toBoolean()){
+            faceLockCounter++
+
+            editor.apply(){
+                putInt("flcounter", faceLockCounter)
+            }.apply()
+
+        }
+
+        if(faceLockCounter == 3){
+
+            editor.apply(){
+                putBoolean("isFaceLockActive", false)
+            }.apply()
+
+            ControlAccessFragment.devicePolicyManager!!.lockNow()
+            faceLockCounter = 0
+        }
+
         //sendBroadcastMessage(objFinal.toString())
     }
 

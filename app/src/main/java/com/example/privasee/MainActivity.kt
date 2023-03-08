@@ -11,6 +11,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.preference.PreferenceManager
 import com.example.privasee.databinding.ActivityMainBinding
+import java.io.File
 
 class MainActivity : AppCompatActivity() {
 
@@ -32,7 +33,22 @@ class MainActivity : AppCompatActivity() {
             putString("BACK", "")
         }.apply()
 
+        editor.apply(){
+            putString("workingDirectory", getOutputDirectory().toString())
+        }.apply()
+
         autoGivePermission()
+
+    }
+    private fun getOutputDirectory(): File {
+        val mediaDir = externalMediaDirs.firstOrNull()?.let {mFile->
+            File(mFile,resources.getString(R.string.app_name)).apply {
+                mkdirs()
+            }
+        }
+
+        return if (mediaDir != null && mediaDir.exists())
+            mediaDir else filesDir
     }
 
     override fun onSupportNavigateUp(): Boolean { // make the back button in AddFragment functional

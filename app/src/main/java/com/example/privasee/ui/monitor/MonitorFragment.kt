@@ -21,8 +21,13 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.navigation.fragment.findNavController
 import androidx.preference.PreferenceManager
 import com.example.privasee.R
+import com.example.privasee.ui.monitor.gallery.SeeSnapshots
 import kotlinx.android.synthetic.main.fragment_add_user.*
+import kotlinx.android.synthetic.main.fragment_control_access.*
 import kotlinx.android.synthetic.main.fragment_monitor.*
+import kotlinx.android.synthetic.main.fragment_monitor.givePermission
+import kotlinx.android.synthetic.main.fragment_monitor_start.*
+import java.io.File
 
 
 class MonitorFragment : Fragment() {
@@ -68,6 +73,18 @@ class MonitorFragment : Fragment() {
     }
 
     private fun buttonTaps(){
+        val sp = PreferenceManager.getDefaultSharedPreferences(requireContext())
+        var fullPath = sp?.getString("workingDirectory", "")
+
+        var trainingPath = File(fullPath + "/Face Recognition")
+        val files = trainingPath.listFiles()
+
+        if (!trainingPath.exists() || files.isEmpty()) {
+            btnStart.setVisibility(View.GONE)
+        }else{
+            btnStart.setVisibility(View.VISIBLE)
+        }
+
         btnStart.setOnClickListener {
             val sp = PreferenceManager.getDefaultSharedPreferences(requireContext())
             val snapshotTimer = sp?.getString("setSnapshotTimer", "").toString()
@@ -100,6 +117,10 @@ class MonitorFragment : Fragment() {
 
             requireActivity().stopService(
                 Intent(context, MyForegroundServices::class.java))
+
+            editor.apply(){
+                putBoolean("isLockerActive", false)
+            }.apply()
         }
 
         givePermission.setOnClickListener {
@@ -109,7 +130,23 @@ class MonitorFragment : Fragment() {
                 givePermission.setText("Permission Granted")
             }
         }
+
+
+
+        var snapshotPath = File(fullPath + "/Snapshots")
+
+        if (!snapshotPath.exists()) {
+            seeSnapshotsButton.setVisibility(View.GONE)
+        }else{
+            seeSnapshotsButton.setVisibility(View.VISIBLE)
+        }
+
+        seeSnapshotsButton.setOnClickListener {
+            val intent = Intent(requireContext(), SeeSnapshots::class.java)
+            startActivity(intent)
+        }
     }
+
 
     private fun checkForPermissions(permission: String, name: String, requestCode: Int){ //if not granted, it asks for permission
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
