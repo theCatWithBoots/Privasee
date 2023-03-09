@@ -28,6 +28,7 @@ import com.chaquo.python.Python
 import com.chaquo.python.android.AndroidPlatform
 import com.example.privasee.R
 import com.example.privasee.ui.controlAccess.ControlAccessFragment
+import kotlinx.android.synthetic.main.fragment_monitor.*
 import kotlinx.coroutines.Job
 import java.io.ByteArrayOutputStream
 import java.io.File
@@ -65,7 +66,6 @@ class MyForegroundServices :  LifecycleService() {
         if(sp.getBoolean("isLockerActive", false)){
             startTimer()
         }
-
 
             Thread {
                 while (true) {
@@ -147,10 +147,18 @@ class MyForegroundServices :  LifecycleService() {
             override fun onTick(millisUntilFinished: Long) {
                //mTimeLeftInMillis = millisUntilFinished
                // updateCountDownText()
-                Log.i("TAG","Countdown seconds remaining:" + millisUntilFinished / 1000);
 
-                intent.putExtra("countdown",millisUntilFinished)
-                sendBroadcastMessage(intent)
+
+                val sp = PreferenceManager.getDefaultSharedPreferences(this@MyForegroundServices)
+
+                if((sp.getBoolean("IS_ACTIVITY_RUNNING", false))){ //continue broadcast
+                    Log.i("TAG","Countdown seconds remaining:" + millisUntilFinished / 1000);
+
+                    intent.putExtra("countdown",millisUntilFinished)
+                    sendBroadcastMessage(intent)
+                }else{
+                    mCountDownTimer?.cancel() //stop timer
+                }
                 //sendBroadcast(intent)
 
             }

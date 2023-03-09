@@ -86,11 +86,11 @@
 
     <EditText
         android:id="@+id/editTime"
+        android:inputType="number"
         android:layout_width="159dp"
         android:layout_height="58dp"
         android:layout_marginBottom="376dp"
         android:ems="10"
-        android:inputType="textPersonName"
         android:text="0"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
