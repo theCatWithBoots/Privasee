@@ -100,6 +100,8 @@ class MonitorFragment : Fragment() {
                 requireActivity().startForegroundService(
                     Intent(context, MyForegroundServices::class.java)
                         .putExtra("snapshotTimer",snapshotTimer))
+
+
             }else{
                 Toast.makeText(requireContext(), "You did not give Camera Permission", Toast.LENGTH_LONG).show()
             }

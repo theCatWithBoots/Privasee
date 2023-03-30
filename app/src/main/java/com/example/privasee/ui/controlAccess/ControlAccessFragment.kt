@@ -7,16 +7,20 @@ import android.app.TimePickerDialog.OnTimeSetListener
 import android.app.admin.DevicePolicyManager
 import android.content.*
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.accessibility.AccessibilityManager
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.preference.PreferenceManager
 import com.example.privasee.databinding.FragmentControlAccessBinding
+import com.example.privasee.ui.monitor.AppAccessService
 import com.example.privasee.ui.monitor.MyForegroundServices
+import com.example.privasee.utils.CheckPermissionUtils
 import kotlinx.android.synthetic.main.fragment_control_access.*
 import java.util.*
 
@@ -183,6 +187,12 @@ class ControlAccessFragment : Fragment() {
         timeButton.setOnClickListener {
             popTimePicker()
         }
+
+        accessibility.setOnClickListener {
+            CheckPermissionUtils.checkAccessibilityPermission(requireContext())
+        }
+
+
     }
 
     fun popTimePicker() {

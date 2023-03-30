@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.users.addUser.AddUserFragment">
+    tools:context=".ui.userList.addUser.AddUserFragment">
 
     <Button
-        android:id="@+id/btn_add_user_next"
+        android:id="@+id/btnNext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="300dp"
@@ -18,7 +18,7 @@
         app:layout_constraintStart_toStartOf="@+id/textView2" />
 
     <EditText
-        android:id="@+id/et_add_user_name"
+        android:id="@+id/etAddUserName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="144dp"
@@ -37,10 +37,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
         android:text="Default App Blocklist"
-        app:layout_constraintEnd_toEndOf="@+id/et_add_user_name"
+        app:layout_constraintEnd_toEndOf="@+id/etAddUserName"
         app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="@+id/et_add_user_name"
-        app:layout_constraintTop_toBottomOf="@+id/et_add_user_name" />
+        app:layout_constraintStart_toStartOf="@+id/etAddUserName"
+        app:layout_constraintTop_toBottomOf="@+id/etAddUserName" />
 
     <TextView
         android:id="@+id/textView2"
