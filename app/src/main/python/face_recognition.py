@@ -32,7 +32,7 @@ def train(*ImgArr):
     return projected_training_images
 
 
-def project_testing(image, project_training_images, pca):
+def project_testing(image, project_training_images, pca, threshold):
 
     decode_data = base64.b64decode(image) #decode the stringe we passed
     np_data = np.frombuffer(decode_data, np.uint8) #convert data to numpy data
@@ -50,7 +50,7 @@ def project_testing(image, project_training_images, pca):
     min_distance = np.min(distances)
 
     # Define threshold
-    threshold = 8000
+    #threshold = 8000
 
 
     if min_distance < threshold:

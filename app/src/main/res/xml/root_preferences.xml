@@ -10,6 +10,11 @@
             android:title="Set Snapshot Timer"
             app:useSimpleSummaryProvider="true" />
 
+        <EditTextPreference
+            android:key="setThreshold"
+            android:title="Set Threshold"
+            app:useSimpleSummaryProvider="true" />
+
     </PreferenceCategory>
 
 

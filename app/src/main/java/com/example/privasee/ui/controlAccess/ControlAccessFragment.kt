@@ -2,10 +2,11 @@ package com.example.privasee.ui.controlAccess
 
 import android.app.Activity
 import android.app.ActivityManager
+import android.app.TimePickerDialog
+import android.app.TimePickerDialog.OnTimeSetListener
 import android.app.admin.DevicePolicyManager
 import android.content.*
 import android.os.Bundle
-import android.text.InputType
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -17,8 +18,7 @@ import androidx.preference.PreferenceManager
 import com.example.privasee.databinding.FragmentControlAccessBinding
 import com.example.privasee.ui.monitor.MyForegroundServices
 import kotlinx.android.synthetic.main.fragment_control_access.*
-import kotlinx.android.synthetic.main.fragment_control_access.givePermission
-import kotlinx.android.synthetic.main.fragment_monitor.*
+import java.util.*
 
 
 class ControlAccessFragment : Fragment() {
@@ -38,6 +38,7 @@ class ControlAccessFragment : Fragment() {
 
         _binding = FragmentControlAccessBinding.inflate(inflater, container, false)
         return binding.root
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -45,20 +46,30 @@ class ControlAccessFragment : Fragment() {
 
         val sp = PreferenceManager.getDefaultSharedPreferences(requireContext())
 
-        if(sp.contains("theTime") != null){
+        /*if(sp.contains("theTime") != null){
             var t = sp.getLong("theTime", 0).toInt()
             editTime.setText("$t")
         }else{
             editTime.setText("0")
-        }
+        }*/
 
         setTimer.setOnClickListener {
             val active = devicePolicyManager!!.isAdminActive(compName!!)
 
             if (active) {
                 //devicePolicyManager!!.lockNow()
-                var timerString = editTime.getText().toString()
-                var timerInt = timerString.toLong()
+                var timerString = timeButton.getText().toString()
+
+                val units = timerString.split(":".toRegex()).dropLastWhile { it.isEmpty() }
+                    .toTypedArray() //will break the string up into an array
+
+                val hour = units[0].toInt() //first element
+
+                val minutes = units[1].toInt() //second element
+
+                val duration = 60 * hour + minutes //add up our values
+
+                var timerInt = duration.toLong()
 
                 val editor = sp.edit()
                 editor.apply(){
@@ -168,7 +179,33 @@ class ControlAccessFragment : Fragment() {
             disablePermission.setVisibility(View.GONE)
             givePermission.setVisibility(View.VISIBLE)
         }
+
+        timeButton.setOnClickListener {
+            popTimePicker()
+        }
     }
+
+    fun popTimePicker() {
+        // var timeButton: Button? = null
+        var hour = 0
+        var minute = 0
+
+        val onTimeSetListener =
+            OnTimeSetListener { timePicker, selectedHour, selectedMinute ->
+                hour = selectedHour
+                minute = selectedMinute
+                timeButton!!.text =
+                    kotlin.String.format(Locale.getDefault(), "%02d:%02d", hour, minute)
+            }
+
+        // int style = AlertDialog.THEME_HOLO_DARK;
+        val timePickerDialog =
+            TimePickerDialog(requireContext(),  /*style,*/onTimeSetListener, hour, minute, true)
+        timePickerDialog.setTitle("Select Time")
+
+        timePickerDialog.show()
+    }
+
 
     private val broadcastReceiver: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {

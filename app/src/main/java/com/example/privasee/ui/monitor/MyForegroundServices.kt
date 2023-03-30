@@ -265,6 +265,9 @@ class MyForegroundServices :  LifecycleService() {
     }
 
     private fun faceRecognition(bitmap: Bitmap){
+
+        val sp = PreferenceManager.getDefaultSharedPreferences(this)
+
         //start python
         if (!Python.isStarted()) Python.start(AndroidPlatform(this))
         val py = Python.getInstance()
@@ -292,25 +295,28 @@ class MyForegroundServices :  LifecycleService() {
 
 
         val pyobj = py.getModule("face_recognition") //give name of python file
-        val obj = pyobj.callAttr("train", *trainingString) //call main method
+        val obj = pyobj.callAttr("train", *trainingString ) //call main method
 
         val pyobj2 = py.getModule("get_pcca") //give name of python file
         val obj2 = pyobj2.callAttr("train", *trainingString) //call main method
 
         //val bitmapp = BitmapFactory.decodeFile(string)
         var imageStringg = getStringImage(bitmap)
+        val threshold = sp.getInt("setThreshold", 8000)
 
         val objFinal = pyobj.callAttr(
             "project_testing",
             imageStringg,
             obj,
-            obj2
+            obj2,
+            threshold
         ) //call main method project_testing
 
         Toast.makeText(this, "$objFinal", Toast.LENGTH_LONG).show()
 
-        val sp = PreferenceManager.getDefaultSharedPreferences(this)
+
         val editor = sp.edit()
+
         if((sp.getBoolean("isFaceLockActive", false)) && !objFinal.toBoolean()){
             faceLockCounter++
 
@@ -318,6 +324,10 @@ class MyForegroundServices :  LifecycleService() {
                 putInt("flcounter", faceLockCounter)
             }.apply()
 
+        }else{
+            editor.apply(){
+                putInt("flcounter", 0)
+            }.apply()
         }
 
         if(faceLockCounter == 3){

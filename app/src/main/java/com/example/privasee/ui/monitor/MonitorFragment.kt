@@ -147,7 +147,6 @@ class MonitorFragment : Fragment() {
         }
     }
 
-
     private fun checkForPermissions(permission: String, name: String, requestCode: Int){ //if not granted, it asks for permission
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
             when {
