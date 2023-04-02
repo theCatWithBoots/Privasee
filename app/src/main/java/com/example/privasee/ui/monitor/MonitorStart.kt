@@ -45,8 +45,6 @@ class MonitorStart : Fragment() {
         // set up the ActionBar
         setupActionBarWithNavController(activity as AppCompatActivity, navController)
 
-
-
     }
 
     override fun onDestroyView() {

@@ -16,7 +16,7 @@ import com.example.privasee.database.model.Restriction
 import com.example.privasee.database.model.User
 import com.example.privasee.database.viewmodel.AppViewModel
 import com.example.privasee.database.viewmodel.RestrictionViewModel
-import com.example.privasee.database.database.viewmodel.UserViewModel
+import com.example.privasee.database.viewmodel.UserViewModel
 import com.example.privasee.databinding.FragmentAddUserBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job

@@ -10,7 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.privasee.R
-import com.example.privasee.database.database.viewmodel.UserViewModel
+import com.example.privasee.database.viewmodel.UserViewModel
 import com.example.privasee.databinding.FragmentUserListBinding
 
 class UserListFragment : Fragment() {

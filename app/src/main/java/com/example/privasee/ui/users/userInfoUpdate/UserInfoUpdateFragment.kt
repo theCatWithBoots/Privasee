@@ -1,23 +1,30 @@
 package com.example.privasee.ui.users.userInfoUpdate
 
+
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.MenuProvider
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.privasee.R
 import com.example.privasee.database.model.User
-import com.example.privasee.database.database.viewmodel.UserViewModel
+import com.example.privasee.database.viewmodel.RestrictionViewModel
+import com.example.privasee.database.viewmodel.UserViewModel
 import com.example.privasee.databinding.FragmentUserInfoUpdateBinding
 import com.example.privasee.ui.users.userInfoUpdate.userAppControl.UserAppControllingActivity
 import com.example.privasee.ui.users.userInfoUpdate.userAppMonitoring.UserAppMonitoringActivity
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class UserInfoUpdateFragment : Fragment(), MenuProvider {
 
@@ -38,6 +45,11 @@ class UserInfoUpdateFragment : Fragment(), MenuProvider {
         val userName = args.currentUser.name
         val userId = args.currentUser.id
 
+      //  if (userId == 1) // owner will always be 1, hide controlled apps for owner
+      //      binding.btnUserSetControlled.isVisible = false
+      //  else // hide monitored apps for non-owner
+       //     binding.btnUserSetMonitored.isVisible = false
+
         binding.updateName.setText(userName)
 
         binding.btnUserSetMonitored.setOnClickListener {
@@ -54,12 +66,10 @@ class UserInfoUpdateFragment : Fragment(), MenuProvider {
             }
         }
 
-
         binding.btnUserUpdateApply.setOnClickListener {
             updateItem()
             findNavController().navigate(R.id.action_updateUserFragment_to_userFragment)
         }
-
 
         return binding.root
     }

@@ -13,7 +13,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.privasee.R
 import com.example.privasee.database.viewmodel.RestrictionViewModel
-import com.example.privasee.database.database.viewmodel.UserViewModel
+import com.example.privasee.database.viewmodel.UserViewModel
 import com.example.privasee.databinding.FragmentUserAppMonitoredBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job

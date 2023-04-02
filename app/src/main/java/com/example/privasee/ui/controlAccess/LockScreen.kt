@@ -13,7 +13,7 @@ class LockScreen(private val activity: MyForegroundServices){
             setMessage("This device will now be locked.")
             setTitle("Time ran out")
             setPositiveButton("ok") { dialog, which ->
-                ControlAccessFragment.devicePolicyManager!!.lockNow()
+                ControlAccessFragmentScreenTimeLimit.devicePolicyManager!!.lockNow()
             }
         }
         val dialog: AlertDialog = builder.create()

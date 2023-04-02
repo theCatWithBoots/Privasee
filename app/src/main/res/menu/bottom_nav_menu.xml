@@ -7,7 +7,7 @@
 
     <item
         android:title="Control Access"
-        android:id="@+id/controlAccessFragment"
+        android:id="@+id/controlAccessStart"
         android:icon="@drawable/control_access" />
 
     <item

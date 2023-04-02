@@ -49,6 +49,79 @@
             </LayoutPositions>
           </value>
         </entry>
+        <entry key="control_access_nav.xml">
+          <value>
+            <LayoutPositions>
+              <option name="myPositions">
+                <map>
+                  <entry key="controlAccessFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="1" />
+                            <option name="y" value="-50" />
+                          </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_controlAccessFragment_to_setupAppLock">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="setOwner">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="256" />
+                            <option name="y" value="-51" />
+                          </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_setupAppLock_to_controlAccessFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="setupAppLock">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="138" />
+                            <option name="y" value="290" />
+                          </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_setupAppLock_to_controlAccessFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </LayoutPositions>
+          </value>
+        </entry>
         <entry key="controlling_nav.xml">
           <value>
             <LayoutPositions>
@@ -248,35 +321,18 @@
             <LayoutPositions>
               <option name="myPositions">
                 <map>
-                  <entry key="mainActivity">
+                  <entry key="controlAccessFragment">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="744" />
-                            <option name="y" value="12" />
-                          </Point>
-                        </option>
-                      </LayoutPositions>
-                    </value>
-                  </entry>
-                  <entry key="setupOwnerFragment">
-                    <value>
-                      <LayoutPositions>
-                        <option name="myPosition">
-                          <Point>
-                            <option name="x" value="500" />
-                            <option name="y" value="12" />
+                            <option name="x" value="-180" />
+                            <option name="y" value="-53" />
                           </Point>
                         </option>
                         <option name="myPositions">
                           <map>
-                            <entry key="action_setupOwnerFragment_to_mainActivity">
-                              <value>
-                                <LayoutPositions />
-                              </value>
-                            </entry>
-                            <entry key="action_setupOwnerFragment_to_setupPermissionsFragment">
+                            <entry key="action_controlAccessFragment_to_setupAppLock">
                               <value>
                                 <LayoutPositions />
                               </value>
@@ -286,44 +342,18 @@
                       </LayoutPositions>
                     </value>
                   </entry>
-                  <entry key="setupPermissionsFragment">
+                  <entry key="setupAppLock">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="256" />
-                            <option name="y" value="12" />
+                            <option name="x" value="14" />
+                            <option name="y" value="-49" />
                           </Point>
                         </option>
                         <option name="myPositions">
                           <map>
-                            <entry key="action_setupPermissionsFragment_to_setupOwnerFragment">
-                              <value>
-                                <LayoutPositions />
-                              </value>
-                            </entry>
-                            <entry key="action_setupPermissionsFragment_to_setupTermsFragment">
-                              <value>
-                                <LayoutPositions />
-                              </value>
-                            </entry>
-                          </map>
-                        </option>
-                      </LayoutPositions>
-                    </value>
-                  </entry>
-                  <entry key="setupTermsFragment">
-                    <value>
-                      <LayoutPositions>
-                        <option name="myPosition">
-                          <Point>
-                            <option name="x" value="12" />
-                            <option name="y" value="12" />
-                          </Point>
-                        </option>
-                        <option name="myPositions">
-                          <map>
-                            <entry key="action_setupTermsFragment_to_setupPermissionsFragment">
+                            <entry key="action_setupAppLock_to_controlAccessFragment">
                               <value>
                                 <LayoutPositions />
                               </value>

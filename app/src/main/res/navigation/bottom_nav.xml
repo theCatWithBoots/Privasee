@@ -11,8 +11,8 @@
         android:label="fragment_monitor_start"
         tools:layout="@layout/fragment_monitor_start" />
     <fragment
-        android:id="@+id/controlAccessFragment"
-        android:name="com.example.privasee.ui.controlAccess.ControlAccessFragment"
+        android:id="@+id/controlAccessStart"
+        android:name="com.example.privasee.ui.controlAccess.ControlAccessStart"
         android:label="fragment_control_access"
         tools:layout="@layout/fragment_control_access" />
     <fragment

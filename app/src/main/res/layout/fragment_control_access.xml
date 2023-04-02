@@ -6,17 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".ui.controlAccess.ControlAccessFragment">
 
-    <Button
-        android:id="@+id/disablePermission"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="644dp"
-        android:text="Disable Admin Permission"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.512"
-        app:layout_constraintStart_toStartOf="parent" />
-
     <TextView
         android:id="@+id/textview"
         android:layout_width="wrap_content"
@@ -25,132 +14,89 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/setTimer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Set Timer"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.171"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.456" />
-
-    <Button
-        android:id="@+id/enableFaceLock"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Enable Face Lock"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.171"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.796" />
-
-    <Button
-        android:id="@+id/disableFaceLock"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Disable Face Lock"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.175"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.866" />
-
-    <Button
-        android:id="@+id/cancelTimer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Cancel Timer"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.705"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.456" />
-
-    <Button
-        android:id="@+id/givePermission"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="84dp"
-        android:text="Enable Admin Permission"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/timeButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:width="300dp"
-        android:height="100dp"
-        android:onClick="popTimePicker"
-        android:text="Select Time"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.229" />
-
-    <TextView
-        android:id="@+id/remainingTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="176dp"
-        android:layout_marginEnd="177dp"
-        android:layout_marginBottom="187dp"
-        android:text=""
-        android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.886" />
-
-    <TextView
-        android:id="@+id/timeSet"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=""
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.581" />
-
-    <TextView
-        android:id="@+id/faceLockStatus"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=""
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.364"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.924" />
-
 
     <Button
         android:id="@+id/accessibility"
         android:layout_width="151dp"
         android:layout_height="82dp"
-        android:text="enable accessibility"
+        android:text="Enable Accessibility"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.94"
+        app:layout_constraintHorizontal_bias="0.846"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.836" />
+        app:layout_constraintVertical_bias="0.522" />
+
+    <Button
+        android:id="@+id/btnSelectApps"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="144dp"
+        android:layout_marginBottom="172dp"
+        android:text="select"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/scrnTimeLimit"
+        android:layout_width="209dp"
+        android:layout_height="55dp"
+        android:text="Screen Time Limit"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.321" />
+
+    <Button
+        android:id="@+id/setOwner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Set Owner"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.548"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.872" />
+
+    <Spinner
+        android:id="@+id/spinnerUsers"
+        android:layout_width="297dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="57dp"
+        android:layout_marginTop="72dp"
+        android:layout_marginEnd="57dp"
+        android:layout_marginBottom="44dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <Button
+        android:id="@+id/btnTestService1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="add"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.356"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.496" />
+
+    <Button
+        android:id="@+id/btnTestService2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="remove"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.65" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -31,6 +31,7 @@ import com.chaquo.python.Python
 import com.chaquo.python.android.AndroidPlatform
 import com.example.privasee.R
 import com.example.privasee.ui.controlAccess.ControlAccessFragment
+import com.example.privasee.ui.controlAccess.ControlAccessFragmentScreenTimeLimit
 import com.example.privasee.ui.users.userInfoUpdate.userAppControl.applock.BlockScreen
 import kotlinx.android.synthetic.main.fragment_monitor.*
 import kotlinx.coroutines.Job
@@ -175,7 +176,7 @@ class MyForegroundServices :  LifecycleService() {
                     editor.apply(){
                         putBoolean("isLockerActive", false)
                     }.apply()
-                    ControlAccessFragment.devicePolicyManager!!.lockNow()
+                    ControlAccessFragmentScreenTimeLimit.devicePolicyManager!!.lockNow()
                 }
 
                 //var devicePolicyManager: DevicePolicyManager? = null
@@ -339,7 +340,7 @@ class MyForegroundServices :  LifecycleService() {
                 putBoolean("isFaceLockActive", false)
             }.apply()
 
-            ControlAccessFragment.devicePolicyManager!!.lockNow()
+            ControlAccessFragmentScreenTimeLimit.devicePolicyManager!!.lockNow()
             faceLockCounter = 0
         }
 

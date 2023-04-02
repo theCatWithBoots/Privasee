@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/control_access_nav"
+    app:startDestination="@id/controlAccessFragment">
+
+    <fragment
+        android:id="@+id/setOwner"
+        android:name="com.example.privasee.ui.controlAccess.SetupOwnerFragment"
+        android:label="SetupOwnerFragment"
+        tools:layout="@layout/fragment_setup_owner" >
+        <action
+            android:id="@+id/action_setupOwner_to_controlAccessFragment"
+            app:destination="@id/controlAccessFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/controlAccessFragment"
+        android:name="com.example.privasee.ui.controlAccess.ControlAccessFragment"
+        android:label="ControlAccessFragment"
+        tools:layout="@layout/fragment_control_access" >
+        <action
+            android:id="@+id/action_controlAccessFragment_to_setupOwner"
+            app:destination="@id/setOwner" />
+    </fragment>
+</navigation>
