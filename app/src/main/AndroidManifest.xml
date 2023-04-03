@@ -62,6 +62,21 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+        <activity
+            android:name=".ui.initialRun.SetupActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+
+        <activity
+            android:name=".ui.users.userInfoUpdate.userAppControl.applock.BlockScreen2"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
 
         <activity
             android:name=".ui.monitor.gallery.ImageFullActivity"
@@ -92,6 +107,7 @@
         </activity>
         <service android:name=".ui.monitor.MyForegroundServices"></service>
         <service android:name=".ui.monitor.MonitorService"></service>
+        <service android:name=".ui.controlAccess.AppLockTimer"></service>
 
         <service android:name=".ui.monitor.MonitorIntentService"
                 android:exported="false" ></service>

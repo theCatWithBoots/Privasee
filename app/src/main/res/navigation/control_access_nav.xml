@@ -6,12 +6,12 @@
     app:startDestination="@id/controlAccessFragment">
 
     <fragment
-        android:id="@+id/setOwner"
-        android:name="com.example.privasee.ui.controlAccess.SetupOwnerFragment"
+        android:id="@+id/screenTimeLimit"
+        android:name="com.example.privasee.ui.controlAccess.ControlAccessFragmentScreenTimeLimit"
         android:label="SetupOwnerFragment"
-        tools:layout="@layout/fragment_setup_owner" >
+        tools:layout="@layout/fragment_control_access_screentimelimit" >
         <action
-            android:id="@+id/action_setupOwner_to_controlAccessFragment"
+            android:id="@+id/action_screenTimeLimit_to_controlAccessFragment"
             app:destination="@id/controlAccessFragment" />
     </fragment>
 
@@ -20,8 +20,41 @@
         android:name="com.example.privasee.ui.controlAccess.ControlAccessFragment"
         android:label="ControlAccessFragment"
         tools:layout="@layout/fragment_control_access" >
+
         <action
-            android:id="@+id/action_controlAccessFragment_to_setupOwner"
+            android:id="@+id/action_controlAccessFragment_to_appLock"
+            app:destination="@id/appLock" />
+        <action
+            android:id="@+id/action_controlAccessFragment_to_screenTimeLimit"
+            app:destination="@id/screenTimeLimit" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/appLock"
+        android:name="com.example.privasee.ui.controlAccess.ControlAccessFragmentScreenAppLock"
+        android:label="ControlAccessFragment"
+        tools:layout="@layout/fragment_control_access_applock" >>
+        <action
+            android:id="@+id/action_appLock_to_controlAccessFragment"
+            app:destination="@id/controlAccessFragment" />
+        <action
+            android:id="@+id/action_appLock_to_setOwner"
             app:destination="@id/setOwner" />
     </fragment>
+
+
+
+    <fragment
+        android:id="@+id/setOwner"
+        android:name="com.example.privasee.ui.controlAccess.SetupOwnerFragment"
+        android:label="ControlAccessFragment"
+        tools:layout="@layout/fragment_setup_owner" >>
+
+        <action
+            android:id="@+id/action_setOwner_to_appLock2"
+            app:destination="@id/appLock" />
+    </fragment>
+
+
 </navigation>

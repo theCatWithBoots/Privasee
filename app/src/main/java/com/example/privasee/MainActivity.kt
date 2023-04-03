@@ -1,5 +1,7 @@
 package com.example.privasee
 
+import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -11,6 +13,8 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.preference.PreferenceManager
 import com.example.privasee.databinding.ActivityMainBinding
+import com.example.privasee.ui.initialRun.SetupActivity
+import com.example.privasee.utils.CheckPermissionUtils
 import java.io.File
 
 class MainActivity : AppCompatActivity() {
@@ -25,6 +29,21 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
+       /* val sharedPreferences = getSharedPreferences("isFirstTimeOpen", Context.MODE_PRIVATE)
+        val isFirstTimeOpen = sharedPreferences.getBoolean("isFirstTimeOpen", true)
+
+        if (isFirstTimeOpen) {
+            // Start initial run
+            Intent(this, SetupActivity::class.java).also {
+                startActivity(it)
+            }
+            sharedPreferences.edit().putBoolean("isFirstTimeOpen", false).apply()
+        } else {
+            CheckPermissionUtils.checkAccessibilityPermission(this)
+        }
+
+*/
         val bottomNavigationView = binding.bottomNavMenu
         BottomNavController = findNavController(R.id.bottom_nav_menu_fcv)
         bottomNavigationView.setupWithNavController(BottomNavController)

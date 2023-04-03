@@ -6,36 +6,26 @@
     android:layout_height="match_parent"
     tools:context=".ui.controlAccess.ControlAccessFragment">
 
+    <Button
+        android:id="@+id/applock"
+        android:layout_width="209dp"
+        android:layout_height="55dp"
+        android:text="App Lock"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.424" />
+
     <TextView
-        android:id="@+id/textview"
+        android:id="@+id/appLock"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Control Access"
+        android:text="App Lock"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 
-    <Button
-        android:id="@+id/accessibility"
-        android:layout_width="151dp"
-        android:layout_height="82dp"
-        android:text="Enable Accessibility"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.846"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.522" />
-
-    <Button
-        android:id="@+id/btnSelectApps"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="144dp"
-        android:layout_marginBottom="172dp"
-        android:text="select"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
         android:id="@+id/scrnTimeLimit"
@@ -48,55 +38,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.321" />
 
-    <Button
-        android:id="@+id/setOwner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Set Owner"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.548"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.872" />
-
-    <Spinner
-        android:id="@+id/spinnerUsers"
-        android:layout_width="297dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="57dp"
-        android:layout_marginTop="72dp"
-        android:layout_marginEnd="57dp"
-        android:layout_marginBottom="44dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="SpeakableTextPresentCheck" />
-
-    <Button
-        android:id="@+id/btnTestService1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="add"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.356"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.496" />
-
-    <Button
-        android:id="@+id/btnTestService2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="remove"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.3"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.65" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

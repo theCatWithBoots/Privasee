@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -91,10 +92,18 @@ class SetupOwnerFragment : Fragment() {
         }
 
         binding.btnSetupOwnerFinish.setOnClickListener {
-           // findNavController().navigate(R.id.action_controlAccessFragment_to_setupOwner)
+          // findNavController().navigate(R.id.action_controlAccessFragment_to_setupOwner)
            // requireActivity().finishAffinity()
-
+            getFragmentManager()?.popBackStackImmediate();
         }
+
+        val callback = object : OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+                findNavController().navigate(R.id.action_setOwner_to_appLock2)
+            }
+        }
+
+        requireActivity().onBackPressedDispatcher.addCallback (callback)
 
         return binding.root
     }

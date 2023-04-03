@@ -15,6 +15,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.accessibility.AccessibilityManager
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -59,6 +60,14 @@ class ControlAccessFragmentScreenTimeLimit : Fragment() {
 
 
         _binding = FragmentControlAccessScreentimelimitBinding.inflate(inflater, container, false)
+
+        val callback = object : OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+                findNavController().navigate(R.id.action_screenTimeLimit_to_controlAccessFragment)
+            }
+        }
+
+        requireActivity().onBackPressedDispatcher.addCallback (callback)
         return binding.root
 
     }

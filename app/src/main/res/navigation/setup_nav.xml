@@ -3,25 +3,44 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/setup_nav"
-    app:startDestination="@id/controlAccessFragment">
+    app:startDestination="@id/setupTermsFragment">
 
     <fragment
-        android:id="@+id/setupAppLock"
-        android:name="com.example.privasee.ui.controlAccess.SetupAppLock"
+        android:id="@+id/setupTermsFragment"
+        android:name="com.example.privasee.ui.initialRun.SetupTermsFragment"
+        android:label="Terms &amp; Conditions"
+        tools:layout="@layout/fragment_setup_terms" >
+        <action
+            android:id="@+id/action_setupTermsFragment_to_setupPermissionsFragment"
+            app:destination="@id/setupPermissionsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/setupPermissionsFragment"
+        android:name="com.example.privasee.ui.initialRun.SetupPermissionsFragment"
+        android:label="Enable Permissions"
+        tools:layout="@layout/fragment_setup_permissions" >
+        <action
+            android:id="@+id/action_setupPermissionsFragment_to_setupOwnerFragment"
+            app:destination="@id/setupOwnerFragment" />
+        <action
+            android:id="@+id/action_setupPermissionsFragment_to_setupTermsFragment"
+            app:destination="@id/setupTermsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/setupOwnerFragment"
+        android:name="com.example.privasee.ui.initialRun.SetupOwnerFragment"
         android:label="Register"
-        tools:layout="@layout/fragment_setup_applock" >
+        tools:layout="@layout/fragment_setup_owner" >
         <action
-            android:id="@+id/action_setupAppLock_to_controlAccessFragment"
-            app:destination="@id/controlAccessFragment" />
+            android:id="@+id/action_setupOwnerFragment_to_setupPermissionsFragment"
+            app:destination="@id/setupPermissionsFragment" />
+        <action
+            android:id="@+id/action_setupOwnerFragment_to_mainActivity"
+            app:destination="@id/mainActivity" />
     </fragment>
-
-    <fragment
-        android:id="@+id/controlAccessFragment"
-        android:name="com.example.privasee.ui.controlAccess.ControlAccessFragment"
+    <activity
+        android:id="@+id/mainActivity"
+        android:name="com.example.privasee.MainActivity"
         android:label="activity_main"
-        tools:layout="@layout/activity_main" >
-        <action
-            android:id="@+id/action_controlAccessFragment_to_setupAppLock"
-            app:destination="@id/setupAppLock" />
-    </fragment>
+        tools:layout="@layout/activity_main" />
 </navigation>
