@@ -6,41 +6,22 @@ import android.app.TimePickerDialog
 import android.app.TimePickerDialog.OnTimeSetListener
 import android.app.admin.DevicePolicyManager
 import android.content.*
-import android.content.pm.PackageManager
 import android.os.Bundle
-import android.provider.Settings
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.accessibility.AccessibilityManager
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.navigation.fragment.findNavController
 import androidx.preference.PreferenceManager
 import com.example.privasee.R
-import androidx.navigation.fragment.findNavController
-import com.example.privasee.database.model.App
-import com.example.privasee.database.model.Restriction
-import com.example.privasee.database.model.User
-import com.example.privasee.database.viewmodel.AppViewModel
-import com.example.privasee.database.viewmodel.RestrictionViewModel
 import com.example.privasee.databinding.FragmentControlAccessScreentimelimitBinding
-import com.example.privasee.ui.monitor.AppAccessService
 import com.example.privasee.ui.monitor.MyForegroundServices
-import com.example.privasee.ui.users.userInfoUpdate.userAppControl.UserAppControllingActivity
-import com.example.privasee.ui.users.userInfoUpdate.userAppMonitoring.UserAppMonitoringActivity
-import com.example.privasee.utils.CheckPermissionUtils
-import kotlinx.android.synthetic.main.fragment_control_access.*
+import kotlinx.android.synthetic.main.fragment_control_access_applock.*
 import kotlinx.android.synthetic.main.fragment_control_access_screentimelimit.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.util.*
 
 
@@ -263,8 +244,22 @@ class ControlAccessFragmentScreenTimeLimit : Fragment() {
 
     private fun updateGUI(intent: Intent) {
         if (intent.extras != null) {
+
             val millisUntilFinished = intent.getLongExtra("countdown", 30000)
-            remainingTime.setText(java.lang.Long.toString(millisUntilFinished / 1000))
+
+            var seconds = (millisUntilFinished/1000)
+            var minutes = (seconds/60)
+            val hours = (minutes/60)
+
+            seconds = seconds % 60
+            minutes = minutes % 60
+
+
+            remainingTime.setText(String.format(Locale.getDefault(), "%02d:%02d:%02d", hours, minutes, seconds))
+
+
+           // val millisUntilFinished = intent.getLongExtra("countdown", 30000)
+           // remainingTime.setText(java.lang.Long.toString(millisUntilFinished / 1000))
             //remainingTime.setText("flsjflksdjf")
         }
     }

@@ -16,7 +16,7 @@ import com.example.privasee.R
 import com.example.privasee.database.viewmodel.RestrictionViewModel
 import com.example.privasee.database.viewmodel.AppViewModel
 import com.example.privasee.databinding.FragmentUserAppControlledBinding
-import com.example.privasee.ui.monitor.AppAccessService
+import com.example.privasee.AppAccessService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch

@@ -13,24 +13,22 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.activity.OnBackPressedCallback
-import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.navigation.fragment.findNavController
+import androidx.preference.PreferenceManager
 import com.example.privasee.R
 import com.example.privasee.database.model.User
 import com.example.privasee.database.viewmodel.AppViewModel
 import com.example.privasee.database.viewmodel.RestrictionViewModel
 import com.example.privasee.database.viewmodel.UserViewModel
 import com.example.privasee.databinding.FragmentControlAccessApplockBinding
-import com.example.privasee.ui.monitor.AppAccessService
+import com.example.privasee.AppAccessService
 import com.example.privasee.ui.users.userInfoUpdate.userAppControl.UserAppControllingActivity
 import com.example.privasee.utils.CheckPermissionUtils
-import kotlinx.android.synthetic.main.fragment_control_access.*
 import kotlinx.android.synthetic.main.fragment_control_access_applock.*
-import kotlinx.android.synthetic.main.fragment_control_access_screentimelimit.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.*
@@ -94,6 +92,12 @@ class ControlAccessFragmentScreenAppLock : Fragment() {
                     override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
 
                         val selectedUser = parent.getItemAtPosition(position) as User
+
+                        val sp = PreferenceManager.getDefaultSharedPreferences(requireContext())
+                        val editor = sp.edit()
+                        editor.apply(){
+                            putInt("CurrentUser", selectedUser.id)
+                        }.apply()
 
                         lifecycleScope.launch(Dispatchers.Main) {
 

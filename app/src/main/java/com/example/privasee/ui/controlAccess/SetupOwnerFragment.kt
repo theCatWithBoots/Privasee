@@ -19,6 +19,7 @@ import com.example.privasee.database.viewmodel.AppViewModel
 import com.example.privasee.database.viewmodel.RestrictionViewModel
 import com.example.privasee.database.viewmodel.UserViewModel
 import com.example.privasee.databinding.FragmentSetupOwnerBinding
+import com.example.privasee.ui.users.addUser.AddUserCapturePhoto
 import com.example.privasee.ui.users.userInfoUpdate.userAppControl.UserAppControllingActivity
 import com.example.privasee.ui.users.userInfoUpdate.userAppMonitoring.UserAppMonitoringActivity
 import kotlinx.coroutines.Dispatchers
@@ -95,6 +96,11 @@ class SetupOwnerFragment : Fragment() {
           // findNavController().navigate(R.id.action_controlAccessFragment_to_setupOwner)
            // requireActivity().finishAffinity()
             getFragmentManager()?.popBackStackImmediate();
+        }
+
+        binding.btnOwnerRegisterFace.setOnClickListener {
+            val intent = Intent(requireContext(), AddUserCapturePhoto::class.java)
+            startActivity(intent)
         }
 
         val callback = object : OnBackPressedCallback(true){

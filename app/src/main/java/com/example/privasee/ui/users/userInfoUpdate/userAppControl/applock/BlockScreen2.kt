@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.WindowManager
 import com.example.privasee.databinding.ActivityBlockScreenBinding
-import com.example.privasee.ui.monitor.AppAccessService
+import com.example.privasee.AppAccessService
 
 class BlockScreen2 : AppCompatActivity() {
 

@@ -78,7 +78,6 @@ class AddUserCapturePhoto: AppCompatActivity() {
         }
     }
 
-
     private fun getOutputDirectory(): File{
         val mediaDir = externalMediaDirs.firstOrNull()?.let {
             File(it, resources.getString(R.string.app_name)).apply { mkdirs() }
@@ -247,8 +246,8 @@ class AddUserCapturePhoto: AppCompatActivity() {
 
             if((sp.getInt("loadingStopCounter", 0)) == 20){
                 loadingDialog.dismissDialog()
+                this.finish()
             }
-
 
             var v = sp.getInt("loadingStopCounter", 0).toString()
             imageNumber.setText("$v")
@@ -256,13 +255,13 @@ class AddUserCapturePhoto: AppCompatActivity() {
             //faceRecognition(string)
             out.flush()
             out.close()
+
         } catch (e: java.lang.Exception) {
             e.printStackTrace()
             //Toast.makeText(this, "Can't be Saved", Toast.LENGTH_SHORT).show()
         }
 
     }
-
     private fun getStringImage(bitmap: Bitmap): String {
         val baos = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos)
@@ -301,7 +300,6 @@ class AddUserCapturePhoto: AppCompatActivity() {
         }, ContextCompat.getMainExecutor(this))
     }
 
-
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<String>,
@@ -314,17 +312,14 @@ class AddUserCapturePhoto: AppCompatActivity() {
         }
     }
 
-
     private fun allPermissionGranted() = REQUIRED_PERMISSIONS.all {
         ContextCompat.checkSelfPermission(baseContext, it) == PackageManager.PERMISSION_GRANTED
     }
-
 
     override fun onDestroy() {
         super.onDestroy()
         cameraExecutor.shutdown()
     }
-
 
     companion object {
         const val TAG = "cameraX"

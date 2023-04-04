@@ -106,14 +106,16 @@
                 android:value="" />
         </activity>
         <service android:name=".ui.monitor.MyForegroundServices"></service>
+
         <service android:name=".ui.monitor.MonitorService"></service>
+
         <service android:name=".ui.controlAccess.AppLockTimer"></service>
 
         <service android:name=".ui.monitor.MonitorIntentService"
                 android:exported="false" ></service>
 
         <service
-            android:name=".ui.monitor.AppAccessService"
+            android:name=".AppAccessService"
             android:exported="false"
             android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
             <intent-filter>

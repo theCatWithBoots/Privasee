@@ -5,10 +5,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.camera.core.impl.utils.ContextUtil.getApplicationContext
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -18,8 +16,7 @@ import com.example.privasee.R
 import com.example.privasee.database.viewmodel.AppViewModel
 import com.example.privasee.database.viewmodel.RestrictionViewModel
 import com.example.privasee.databinding.FragmentUserAppUncontrolledBinding
-import com.example.privasee.ui.monitor.AppAccessService
-import com.example.privasee.ui.monitor.MyApplication
+import com.example.privasee.AppAccessService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch

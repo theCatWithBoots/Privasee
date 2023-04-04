@@ -64,26 +64,28 @@ class MonitorService :  LifecycleService() {
         outputDirectory = getOutputDirectory()
         cameraExecutor = Executors.newSingleThreadExecutor()
 
+
         startCamera()
 
         Thread {
-            while (true) {
+        while (true) {
 
-                if(isSnapshotDone){
-                    this.stopSelf()
-                }
+
                 try {
-
+                   Thread.sleep(1000)
                     Log.e("Service", "Service is running...")
+
                     takePhoto()
-
-
 
                 } catch (e: InterruptedException) {
                     e.printStackTrace()
                 }
 
-            }
+           // if(isSnapshotDone){
+         //       this.stopSelf()
+          //  }
+
+         }
             }.start()
 
         return super.onStartCommand(intent, flags, startId)
@@ -160,7 +162,8 @@ class MonitorService :  LifecycleService() {
            // val imageStringSplit = string.substring(string.lastIndexOf("/")+1); //split file path, take last(file)
 
             Toast.makeText(this, "No face detected", Toast.LENGTH_LONG).show()
-            isSnapshotDone = true
+            this.stopSelf()
+            //isSnapshotDone = true
         }else{
             //convert it to byte array
             val data = Base64.decode(str, Base64.DEFAULT)
@@ -211,7 +214,8 @@ class MonitorService :  LifecycleService() {
 
         //val bitmapp = BitmapFactory.decodeFile(string)
         var imageStringg = getStringImage(bitmap)
-        val threshold = sp.getInt("setThreshold", 8000)
+
+        val threshold = sp.getInt("threshold", 8000)
 
         val objFinal = pyobj.callAttr(
             "project_testing",
@@ -222,7 +226,14 @@ class MonitorService :  LifecycleService() {
         ) //call main method project_testing
 
         Toast.makeText(this, "$objFinal", Toast.LENGTH_LONG).show()
-        isSnapshotDone = true
+
+            val editor = sp.edit()
+            editor.apply(){
+                putBoolean("result", objFinal.toBoolean())
+            }.apply()
+
+        this.stopSelf()
+       // isSnapshotDone = true
 
         //sendBroadcastMessage(objFinal.toString())
     }
@@ -309,9 +320,7 @@ class MonitorService :  LifecycleService() {
 
                 cameraProvider.unbindAll()
 
-                cameraProvider.bindToLifecycle(this, cameraSelector,imageCapture
-
-                )
+                cameraProvider.bindToLifecycle(this, cameraSelector,imageCapture)
 
             }catch (e: java.lang.Exception){
                 Log.d(Constants.TAG, "startCamera FAIL: ", e)
@@ -332,7 +341,6 @@ class MonitorService :  LifecycleService() {
     }
 
     override fun onDestroy() {
-        isRunning = false
         cameraExecutor.shutdown()
         super.onDestroy()
         Log.e("Service", "Service Stopped...")

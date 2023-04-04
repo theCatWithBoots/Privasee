@@ -60,13 +60,13 @@
             <LayoutPositions>
               <option name="myPositions">
                 <map>
-                  <entry key="controlAccessFragment">
+                  <entry key="controlAccessStart">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="-402" />
-                            <option name="y" value="-217" />
+                            <option name="x" value="243" />
+                            <option name="y" value="92" />
                           </Point>
                         </option>
                       </LayoutPositions>
@@ -316,6 +316,70 @@
                             <option name="x" value="12" />
                             <option name="y" value="368" />
                           </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </LayoutPositions>
+          </value>
+        </entry>
+        <entry key="monitor_nav.xml">
+          <value>
+            <LayoutPositions>
+              <option name="myPositions">
+                <map>
+                  <entry key="monitorFragmenTimedSnapshots">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="31" />
+                            <option name="y" value="246" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="monitorFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="-132" />
+                            <option name="y" value="-13" />
+                          </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_monitorFragment_to_monitorFragmentAppSnapshots">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="monitorFragmentAppSnapshots">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="80" />
+                            <option name="y" value="-78" />
+                          </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_monitorFragmentAppSnapshots_to_monitorFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
                         </option>
                       </LayoutPositions>
                     </value>

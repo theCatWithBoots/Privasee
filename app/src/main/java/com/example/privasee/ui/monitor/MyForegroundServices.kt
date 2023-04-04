@@ -1,13 +1,9 @@
 package com.example.privasee.ui.monitor
 
-import android.accessibilityservice.AccessibilityServiceInfo
-import android.app.AlertDialog
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.app.admin.DevicePolicyManager
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
@@ -16,8 +12,6 @@ import android.os.CountDownTimer
 import android.os.IBinder
 import android.util.Base64
 import android.util.Log
-import android.view.WindowManager
-import android.view.accessibility.AccessibilityEvent
 import android.widget.Toast
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
@@ -30,10 +24,7 @@ import androidx.preference.PreferenceManager
 import com.chaquo.python.Python
 import com.chaquo.python.android.AndroidPlatform
 import com.example.privasee.R
-import com.example.privasee.ui.controlAccess.ControlAccessFragment
 import com.example.privasee.ui.controlAccess.ControlAccessFragmentScreenTimeLimit
-import com.example.privasee.ui.users.userInfoUpdate.userAppControl.applock.BlockScreen
-import kotlinx.android.synthetic.main.fragment_monitor.*
 import kotlinx.coroutines.Job
 import java.io.ByteArrayOutputStream
 import java.io.File
@@ -142,7 +133,7 @@ class MyForegroundServices :  LifecycleService() {
 
         val sp = PreferenceManager.getDefaultSharedPreferences(this)
 
-         val startTimeInMillis = sp.getLong("theTime", 0)
+        val startTimeInMillis = sp.getLong("theTime", 0)
          var mCountDownTimer: CountDownTimer? = null
          var mTimerRunning = false
          var mTimeLeftInMillis : Long = TimeUnit.MINUTES.toMillis(startTimeInMillis!!)
@@ -189,7 +180,8 @@ class MyForegroundServices :  LifecycleService() {
     private fun takePhoto(){
 
         val imageCapture = imageCapture?:return
-        var fileName = SimpleDateFormat(Constants.FILE_NAME_FORMAT,
+        var fileName = SimpleDateFormat(
+            Constants.FILE_NAME_FORMAT,
             Locale.getDefault())
             .format(System
                 .currentTimeMillis()) + ".jpg"
@@ -228,7 +220,8 @@ class MyForegroundServices :  LifecycleService() {
                 }
 
                 override fun onError(exception: ImageCaptureException) {
-                    Log.e(Constants.TAG,
+                    Log.e(
+                        Constants.TAG,
                         "onError: ${exception.message}",
                         exception )
                 }
