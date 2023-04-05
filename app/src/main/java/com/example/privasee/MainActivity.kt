@@ -8,10 +8,13 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.preference.PreferenceManager
+import com.example.privasee.database.viewmodel.UserViewModel
 import com.example.privasee.databinding.ActivityMainBinding
 import com.example.privasee.ui.initialRun.SetupActivity
 import com.example.privasee.utils.CheckPermissionUtils
@@ -20,7 +23,9 @@ import java.io.File
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private lateinit var BottomNavController: NavController
+    private lateinit var bottomNavController: NavController
+
+    private lateinit var mUserViewModel: UserViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         
 
@@ -28,7 +33,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
 
        /* val sharedPreferences = getSharedPreferences("isFirstTimeOpen", Context.MODE_PRIVATE)
         val isFirstTimeOpen = sharedPreferences.getBoolean("isFirstTimeOpen", true)
@@ -44,9 +48,28 @@ class MainActivity : AppCompatActivity() {
         }
 
 */
-        val bottomNavigationView = binding.bottomNavMenu
-        BottomNavController = findNavController(R.id.bottom_nav_menu_fcv)
-        bottomNavigationView.setupWithNavController(BottomNavController)
+//        val bottomNavigationView = binding.bottomNavMenu
+
+        bottomNavController = findNavController(R.id.fcvBotNav)
+        binding.botNav.setupWithNavController(bottomNavController)
+
+        mUserViewModel = ViewModelProvider(this)[UserViewModel::class.java]
+
+        // Checking if first time has been opened or when owner is non-existent
+        val sharedPreferences = getSharedPreferences("isFirstTimeOpen", Context.MODE_PRIVATE)
+        val isFirstTimeOpen = sharedPreferences.getBoolean("isFirstTimeOpen", true)
+
+        mUserViewModel.getAllDataLive.observe(this, Observer { userList ->
+
+            if (isFirstTimeOpen || userList.isEmpty()) {
+                // Start initial run
+                val intent = Intent(this@MainActivity, SetupActivity::class.java)
+                startActivity(intent)
+                sharedPreferences.edit().putBoolean("isFirstTimeOpen", false).apply()
+            } else
+                CheckPermissionUtils.checkAccessibilityPermission(this)
+
+        })
 
         val sp = PreferenceManager.getDefaultSharedPreferences(this)
         val editor = sp.edit()

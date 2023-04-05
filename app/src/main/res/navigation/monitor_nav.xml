@@ -17,6 +17,9 @@
         <action
             android:id="@+id/action_monitorFragment_to_monitorFragmenTimedSnapshots"
             app:destination="@id/monitorFragmenTimedSnapshots" />
+        <action
+            android:id="@+id/action_monitorFragment_to_AccessRecords"
+            app:destination="@id/AccessRecords" />
     </fragment>
 
     <fragment
@@ -39,6 +42,17 @@
 
         <action
             android:id="@+id/action_monitorFragmenTimedSnapshots_to_monitorFragment"
+            app:destination="@id/monitorFragment" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/AccessRecords"
+        android:name="com.example.privasee.ui.monitor.MonitoringAccessRecords"
+        android:label="SetupOwnerFragment"
+        tools:layout="@layout/fragment_monitor_access_records" >
+        <action
+            android:id="@+id/action_AccessRecords_to_monitorFragment"
             app:destination="@id/monitorFragment" />
     </fragment>
 

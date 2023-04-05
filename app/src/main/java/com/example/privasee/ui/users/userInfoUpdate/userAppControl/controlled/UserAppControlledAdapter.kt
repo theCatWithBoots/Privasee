@@ -1,11 +1,10 @@
-package com.example.privasee.ui.users.userInfoUpdate.userAppControl.controlled
+package com.example.privasee.ui.userList.userInfoUpdate.userAppControl.controlled
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.privasee.database.model.Restriction
 import com.example.privasee.databinding.RecyclerItemAppCbBinding
-import com.example.privasee.ui.users.userInfoUpdate.userAppControl.controlled.UserAppControlledAdapter
 
 class UserAppControlledAdapter(): RecyclerView.Adapter<UserAppControlledAdapter.AppViewHolder>() {
 

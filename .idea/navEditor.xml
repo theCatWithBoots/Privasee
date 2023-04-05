@@ -330,14 +330,35 @@
             <LayoutPositions>
               <option name="myPositions">
                 <map>
+                  <entry key="AccessRecords">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="179" />
+                            <option name="y" value="226" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
                   <entry key="monitorFragmenTimedSnapshots">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="31" />
-                            <option name="y" value="246" />
+                            <option name="x" value="-51" />
+                            <option name="y" value="285" />
                           </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_monitorFragmenTimedSnapshots_to_monitorFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
                         </option>
                       </LayoutPositions>
                     </value>
@@ -353,6 +374,16 @@
                         </option>
                         <option name="myPositions">
                           <map>
+                            <entry key="action_monitorFragment_to_AccessRecords">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                            <entry key="action_monitorFragment_to_monitorFragmenTimedSnapshots">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
                             <entry key="action_monitorFragment_to_monitorFragmentAppSnapshots">
                               <value>
                                 <LayoutPositions />

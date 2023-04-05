@@ -8,12 +8,16 @@
 
     <TextView
         android:id="@+id/tvOwner"
-        android:layout_width="342dp"
-        android:layout_height="182dp"
-        android:layout_marginTop="136dp"
-        android:text="jkhkjgkjhkjhkjh"
+        android:layout_width="350dp"
+        android:layout_height="300dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="30dp"
+        android:fontFamily="@font/open_sans"
+        android:text="@string/lorem_ipsum"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.492"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -21,31 +25,33 @@
         android:id="@+id/btnOwnerRegisterFace"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:text="Register Face"
-        app:layout_constraintEnd_toEndOf="@+id/btnSelectApps"
-        app:layout_constraintHorizontal_bias="0.517"
-        app:layout_constraintStart_toStartOf="@+id/btnSelectApps"
-        app:layout_constraintTop_toBottomOf="@+id/btnSelectApps" />
-
-    <Button
-        android:id="@+id/btnSelectApps"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="52dp"
-        android:text="Select Apps to Monitor"
-        app:layout_constraintEnd_toEndOf="@+id/tvOwner"
-        app:layout_constraintStart_toStartOf="@+id/tvOwner"
-        app:layout_constraintTop_toBottomOf="@+id/tvOwner" />
+        android:layout_marginTop="30dp"
+        android:text="Enroll Face"
+        app:layout_constraintEnd_toEndOf="@+id/etSetName"
+        app:layout_constraintStart_toStartOf="@+id/etSetName"
+        app:layout_constraintTop_toBottomOf="@+id/etSetName" />
 
     <Button
         android:id="@+id/btnSetupOwnerFinish"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="40dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginBottom="50dp"
         android:text="Finish"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.869"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <EditText
+        android:id="@+id/etSetName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:minHeight="48dp"
+        android:hint="Name"
+        app:layout_constraintEnd_toEndOf="@+id/tvOwner"
+        app:layout_constraintStart_toStartOf="@+id/tvOwner"
+        app:layout_constraintTop_toBottomOf="@+id/tvOwner" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

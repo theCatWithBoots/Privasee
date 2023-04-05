@@ -6,23 +6,20 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.privasee.R
 import com.example.privasee.database.model.App
-import com.example.privasee.database.model.Restriction
 import com.example.privasee.database.model.User
 import com.example.privasee.database.viewmodel.AppViewModel
-import com.example.privasee.database.viewmodel.RestrictionViewModel
 import com.example.privasee.database.viewmodel.UserViewModel
 import com.example.privasee.databinding.FragmentSetupOwnerBinding
-import com.example.privasee.ui.users.userInfoUpdate.userAppMonitoring.UserAppMonitoringActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 
 class SetupOwnerFragment : Fragment() {
@@ -32,9 +29,9 @@ class SetupOwnerFragment : Fragment() {
 
     private lateinit var mUserViewModel: UserViewModel
     private lateinit var mAppViewModel: AppViewModel
-    private lateinit var mRestrictionViewModel: RestrictionViewModel
 
     private var job: Job? = null
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -43,36 +40,22 @@ class SetupOwnerFragment : Fragment() {
 
         mUserViewModel = ViewModelProvider(this)[UserViewModel::class.java]
         mAppViewModel = ViewModelProvider(this)[AppViewModel::class.java]
-        mRestrictionViewModel = ViewModelProvider(this)[RestrictionViewModel::class.java]
-
-        // Initialize the Owner information
-        val userInfo = User(0, "owner", isOwner = true)
-        mUserViewModel.addUser(userInfo)
-
-        val intent = Intent(Intent.ACTION_MAIN)
-        intent.addCategory(Intent.CATEGORY_LAUNCHER)
-        val packageManager = requireContext().packageManager
-        val resolveInfoList = packageManager?.queryIntentActivities(intent, PackageManager.MATCH_ALL)
-
-        if (resolveInfoList != null) {
-            for (resolveInfo in resolveInfoList) {
-                val packageName = resolveInfo.activityInfo.packageName
-                val appName = packageManager.getApplicationLabel(resolveInfo.activityInfo.applicationInfo).toString()
-                val appInfo = App(0, packageName, appName)
-                mAppViewModel.addApp(appInfo)
-            }
-        }
-
-        binding.btnSelectApps.setOnClickListener {
-            Intent(requireContext(), UserAppMonitoringActivity::class.java).also { intent ->
-                intent.putExtra("userId", 1)
-                startActivity(intent)
-            }
-        }
 
         binding.btnSetupOwnerFinish.setOnClickListener {
-            findNavController().navigate(R.id.action_setupOwnerFragment_to_mainActivity)
-            requireActivity().finishAffinity()
+
+            val name = binding.etSetName.text.toString()
+
+            // Initialize the Owner information
+            if(name.isNotEmpty()) {
+                val userInfo = User(0, name, isOwner = true)
+                mUserViewModel.addUser(userInfo)
+                saveInstalledAppsToDB()
+                findNavController().navigate(R.id.action_setupOwnerFragment_to_mainActivity)
+                requireActivity().finishAffinity()
+            } else
+                Toast.makeText(requireContext(), "Please input your name", Toast.LENGTH_SHORT).show()
+
+
         }
 
         return binding.root
@@ -82,7 +65,43 @@ class SetupOwnerFragment : Fragment() {
         super.onDestroyView()
         job?.cancel()
         _binding = null
-
     }
 
+    private fun saveInstalledAppsToDB() {
+        mAppViewModel = ViewModelProvider(this)[AppViewModel::class.java]
+        val intent = Intent(Intent.ACTION_MAIN)
+        intent.addCategory(Intent.CATEGORY_LAUNCHER)
+        val packageManager = requireContext().packageManager
+        val resolveInfoList = packageManager?.queryIntentActivities(intent, PackageManager.MATCH_ALL)
+
+        // Check for duplicated apps existing in the database
+        if (resolveInfoList != null) {
+
+            lifecycleScope.launch(Dispatchers.IO) {
+                val appsInDb = mAppViewModel.getAllData()
+                for (resolveInfo in resolveInfoList) {
+
+                    val packageName = resolveInfo.activityInfo.packageName
+                    val appName = packageManager.getApplicationLabel(resolveInfo.activityInfo.applicationInfo).toString()
+
+                    var isDuplicate = false
+
+                    if (appsInDb.isNotEmpty()) {
+                        for(app in appsInDb) {
+                            if(app.appName == appName) {
+                                isDuplicate = true
+                                break
+                            }
+                        }
+                    }
+
+                    if(!isDuplicate) {
+                        val appInfo = App(packageName = packageName, appName = appName)
+                        mAppViewModel.addApp(appInfo)
+                    }
+                }
+
+            }
+        }
+    }
 }

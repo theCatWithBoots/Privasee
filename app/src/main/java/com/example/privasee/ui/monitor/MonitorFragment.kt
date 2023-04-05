@@ -82,6 +82,10 @@ class MonitorFragment : Fragment() {
             findNavController().navigate(R.id.action_monitorFragment_to_monitorFragmenTimedSnapshots)
         }
 
+        btnAccessRecords.setOnClickListener {
+            findNavController().navigate(R.id.action_monitorFragment_to_AccessRecords)
+        }
+
         val sp = PreferenceManager.getDefaultSharedPreferences(requireContext())
         var t = sp.getInt("threshold", 8000)
         setThreshold.text = "Current Threshold is $t"

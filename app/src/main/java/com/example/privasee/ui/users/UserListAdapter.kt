@@ -2,6 +2,7 @@ package com.example.privasee.ui.users
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.privasee.database.model.User
@@ -24,6 +25,12 @@ class UserListAdapter(): RecyclerView.Adapter<UserListAdapter.UserViewHolder>() 
 
         holder.binding.apply {
             tvUserName.text = currentUser.name
+            val owner = "Owner"
+
+            if (currentUser.isOwner)
+                tvIsOwner.text = owner
+            else
+                tvIsOwner.isVisible = false
 
             recyclerItemUser.setOnClickListener {
                 val action = UserListFragmentDirections.actionUserFragmentToUpdateUserFragment(currentUser)

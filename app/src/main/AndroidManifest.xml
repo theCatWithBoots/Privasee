@@ -115,6 +115,12 @@
                 android:exported="false" ></service>
 
         <service
+            android:name=".DbQueryIntentService"
+            android:enabled="true"
+            android:exported="false" >
+        </service>
+
+        <service
             android:name=".AppAccessService"
             android:exported="false"
             android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">

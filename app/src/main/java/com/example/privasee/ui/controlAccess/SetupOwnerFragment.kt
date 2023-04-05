@@ -1,31 +1,15 @@
 package com.example.privasee.ui.controlAccess
 
-import android.content.Intent
-import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
-import com.example.privasee.R
-import com.example.privasee.database.model.App
-import com.example.privasee.database.model.Restriction
-import com.example.privasee.database.model.User
 import com.example.privasee.database.viewmodel.AppViewModel
 import com.example.privasee.database.viewmodel.RestrictionViewModel
 import com.example.privasee.database.viewmodel.UserViewModel
 import com.example.privasee.databinding.FragmentSetupOwnerBinding
-import com.example.privasee.ui.users.addUser.AddUserCapturePhoto
-import com.example.privasee.ui.users.userInfoUpdate.userAppControl.UserAppControllingActivity
-import com.example.privasee.ui.users.userInfoUpdate.userAppMonitoring.UserAppMonitoringActivity
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 
 class SetupOwnerFragment : Fragment() {
@@ -45,7 +29,7 @@ class SetupOwnerFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentSetupOwnerBinding.inflate(inflater, container, false)
-
+/*
         mUserViewModel = ViewModelProvider(this)[UserViewModel::class.java]
         mAppViewModel = ViewModelProvider(this)[AppViewModel::class.java]
         mRestrictionViewModel = ViewModelProvider(this)[RestrictionViewModel::class.java]
@@ -110,7 +94,7 @@ class SetupOwnerFragment : Fragment() {
         }
 
         requireActivity().onBackPressedDispatcher.addCallback (callback)
-
+*/
         return binding.root
     }
 

@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.util.Log
 import android.view.accessibility.AccessibilityEvent
+import androidx.core.content.ContextCompat
 import com.example.privasee.ui.monitor.MonitorService
 import com.example.privasee.ui.users.userInfoUpdate.userAppControl.applock.BlockScreen
 
@@ -37,9 +38,14 @@ class AppAccessService : AccessibilityService() {
                     previousPackageName = currentlyOpenedApp
                     // start intent service, start verifying etc
                     Log.d("tagimandos", "monitoring $appName")
+                    val intent = Intent(this, DbQueryIntentService::class.java)
+                    intent.putExtra("query", "insertRecord")
+                    intent.putExtra("appName", appName)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                    ContextCompat.startForegroundService(this, intent)
 
-                    val intent = Intent(this, MonitorService::class.java)
-                    startService(intent)
+                  //  val intent = Intent(this, MonitorService::class.java)
+                   // startService(intent)
 
                 }
 
@@ -109,7 +115,10 @@ class AppAccessService : AccessibilityService() {
 
     override fun onServiceConnected() {
         super.onServiceConnected()
-        Log.d("tagimandos", "On service connect")
+        val intent = Intent(this, DbQueryIntentService::class.java)
+        intent.putExtra("query", "getMonitoredApps")
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        ContextCompat.startForegroundService(this, intent)
     }
 
 }

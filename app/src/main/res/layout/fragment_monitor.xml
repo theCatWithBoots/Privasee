@@ -6,6 +6,18 @@
     android:layout_height="match_parent"
     tools:context=".ui.monitor.MonitorFragment">
 
+    <Button
+        android:id="@+id/btnAccessRecords"
+        android:layout_width="216dp"
+        android:layout_height="65dp"
+        android:text="Access Records"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.668" />
+
     <Spinner
         android:id="@+id/spinnerThreshold"
         android:layout_width="293dp"
@@ -23,10 +35,10 @@
         android:text="App Snapshots"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.5" />
+        app:layout_constraintVertical_bias="0.447" />
 
     <Button
         android:id="@+id/timedSnapshots"
@@ -35,10 +47,10 @@
         android:text="Timed Snapshots"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.618" />
+        app:layout_constraintVertical_bias="0.56" />
 
     <TextView
         android:id="@+id/setThreshold"

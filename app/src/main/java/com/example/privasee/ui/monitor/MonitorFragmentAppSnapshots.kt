@@ -82,8 +82,8 @@ class MonitorFragmentAppSnapshots: Fragment() {
                         lifecycleScope.launch(Dispatchers.IO) {
 
                             for (restrictedApp in controlledList) {
-                                val appId = restrictedApp.packageId
-                                val packageName = mAppViewModel.getPackageName(appId)
+                      //          val appId = restrictedApp.packageId
+                                val packageName = mAppViewModel.getPackageName(restrictedApp.appName)
                                 monitoredAppPackageNames.add(packageName)
                             }
                             if (monitoredAppPackageNames.size > 0) {

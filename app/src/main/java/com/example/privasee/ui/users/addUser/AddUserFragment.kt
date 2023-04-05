@@ -48,7 +48,7 @@ class AddUserFragment : Fragment() {
             val name = binding.etAddUserName.text.toString()
             val user = User(0, name, false)
 
-            if (checkInput(name)) {
+            /*if (checkInput(name)) {
                 mUserViewModel.addUser(user)
                 job = lifecycleScope.launch(Dispatchers.IO) {
                     val latestUser = mUserViewModel.getUserId(name)
@@ -58,6 +58,12 @@ class AddUserFragment : Fragment() {
                         mRestrictionViewModel.addRestriction(restriction)
                     }
                 }
+                findNavController().navigate(R.id.action_addUserFragment_to_userFragment)
+            } else
+                Toast.makeText(requireContext(), "Fill all fields", Toast.LENGTH_SHORT).show()*/
+
+            if (checkInput(name)) {
+                mUserViewModel.addUser(user)
                 findNavController().navigate(R.id.action_addUserFragment_to_userFragment)
             } else
                 Toast.makeText(requireContext(), "Fill all fields", Toast.LENGTH_SHORT).show()
