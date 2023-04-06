@@ -45,7 +45,6 @@
             app:destination="@id/monitorFragment" />
     </fragment>
 
-
     <fragment
         android:id="@+id/AccessRecords"
         android:name="com.example.privasee.ui.monitor.MonitoringAccessRecords"
@@ -54,6 +53,23 @@
         <action
             android:id="@+id/action_AccessRecords_to_monitorFragment"
             app:destination="@id/monitorFragment" />
+        <action
+            android:id="@+id/action_AccessRecords_to_ViewImage"
+            app:destination="@id/ViewImage" />
     </fragment>
+
+    <fragment
+        android:id="@+id/ViewImage"
+        android:name="com.example.privasee.ui.monitor.ViewImage"
+        android:label="SetupOwnerFragment"
+        tools:layout="@layout/recycler_item_monitor_view_image" >
+        <action
+            android:id="@+id/action_ViewImage_to_AccessRecords"
+            app:destination="@id/AccessRecords" />
+        <argument
+            android:name="currentRecord"
+            app:argType="com.example.privasee.database.model.Record" />
+    </fragment>
+
 
 </navigation>

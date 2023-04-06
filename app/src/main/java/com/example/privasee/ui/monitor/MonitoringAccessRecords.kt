@@ -7,14 +7,19 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.privasee.database.model.Record
 import com.example.privasee.database.viewmodel.RecordViewModel
 import com.example.privasee.database.viewmodel.UserViewModel
 import com.example.privasee.databinding.FragmentMonitorAccessRecordsBinding
+import com.example.privasee.ui.users.UserListAdapter
+import com.example.privasee.ui.users.UserListFragmentDirections
+import kotlinx.android.synthetic.main.recycler_item_monitor_view_image.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
@@ -49,15 +54,19 @@ class MonitoringAccessRecords : Fragment() {
                         adapter.setData(it)
                     } else {
                         Log.d("tagimandos", "Empty list")
-                        val tempRecord = listOf(Record(0,0,0,0,0, "Empty Record"))
+                        val tempRecord = listOf(Record(0,0,0,0,0, "", "", "Empty Record"))
                         adapter.setData(tempRecord)
                     }
                 }
             }
         }
 
+
+
         return binding.root
     }
+
+
 
     override fun onDestroyView() {
         super.onDestroyView()

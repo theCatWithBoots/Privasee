@@ -29,6 +29,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.preference.PreferenceManager
 import com.chaquo.python.Python
 import com.chaquo.python.android.AndroidPlatform
+import com.example.privasee.DbQueryIntentService
 import com.example.privasee.R
 import com.example.privasee.ui.controlAccess.ControlAccessFragment
 import com.example.privasee.ui.users.userInfoUpdate.userAppControl.applock.BlockScreen
@@ -58,34 +59,34 @@ class MonitorService :  LifecycleService() {
 
     var isSnapshotDone = false
 
+    var appname = ""
+
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
 
         outputDirectory = getOutputDirectory()
         cameraExecutor = Executors.newSingleThreadExecutor()
 
+        if (intent != null) {
+            appname = intent.getStringExtra("appName").toString()
+        }
+
 
         startCamera()
 
         Thread {
-        while (true) {
-
+             do {
 
                 try {
-                   Thread.sleep(1000)
                     Log.e("Service", "Service is running...")
-
-                    takePhoto()
+                        takePhoto()
 
                 } catch (e: InterruptedException) {
                     e.printStackTrace()
                 }
 
-           // if(isSnapshotDone){
-         //       this.stopSelf()
-          //  }
-
-         }
+                 Thread.sleep(1000)
+             } while (!isSnapshotDone)
             }.start()
 
         return super.onStartCommand(intent, flags, startId)
@@ -162,13 +163,23 @@ class MonitorService :  LifecycleService() {
            // val imageStringSplit = string.substring(string.lastIndexOf("/")+1); //split file path, take last(file)
 
             Toast.makeText(this, "No face detected", Toast.LENGTH_LONG).show()
+
+            val intent = Intent(this, DbQueryIntentService::class.java)
+            intent.putExtra("image", string)
+            intent.putExtra("query", "insertRecord")
+            intent.putExtra("appName", appname)
+            intent.putExtra("status", "No face Detected")
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            ContextCompat.startForegroundService(this, intent)
+            isSnapshotDone = true
             this.stopSelf()
-            //isSnapshotDone = true
+
         }else{
             //convert it to byte array
             val data = Base64.decode(str, Base64.DEFAULT)
             //now convert it to bitmap
             val bmp = BitmapFactory.decodeByteArray(data, 0, data.size)
+
 
             createDirectoryAndSaveFile(bmp, string)
             faceRecognition(bmp)

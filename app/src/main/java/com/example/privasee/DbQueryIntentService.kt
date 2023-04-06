@@ -4,6 +4,9 @@ import android.app.IntentService
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.util.Base64
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.lifecycle.ViewModelProvider
@@ -15,6 +18,7 @@ import com.example.privasee.database.viewmodel.UserViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.io.ByteArrayOutputStream
 import java.util.*
 
 class DbQueryIntentService : IntentService("TestIntentService") {
@@ -54,8 +58,12 @@ class DbQueryIntentService : IntentService("TestIntentService") {
             val time = calendar.timeInMillis
 
             val appName = intent.getStringExtra("appName")
+            val status = intent.getStringExtra("status").toString()
+            val bitmap = BitmapFactory.decodeFile(intent.getStringExtra("image").toString())
+            val snapshotImage = getStringImage(bitmap)
+
             mRecordViewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(application).create(RecordViewModel::class.java)
-            val record = appName?.let { Record(0, day, month, year, time, it) }
+            val record = appName?.let { Record(0, day, month, year, time, status, snapshotImage, it) }
             Log.d("tagimandos", "dbqueryintent service $record")
 
             if (record != null)
@@ -90,6 +98,16 @@ class DbQueryIntentService : IntentService("TestIntentService") {
         stopSelf() // Staph
     }
 
+
+    private fun getStringImage(bitmap: Bitmap): String {
+        val baos = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos)
+
+        //store in byte array
+        val imageBytes = baos.toByteArray()
+        //finally encode to string
+        return Base64.encodeToString(imageBytes, Base64.DEFAULT)
+    }
     override fun onDestroy() {
         super.onDestroy()
         Log.d("tagimandos", "Service destroyed")

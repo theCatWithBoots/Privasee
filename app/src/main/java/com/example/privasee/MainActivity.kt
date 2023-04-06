@@ -27,27 +27,25 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var mUserViewModel: UserViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
-        
+
 
 //        supportActionBar?.hide()
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-       /* val sharedPreferences = getSharedPreferences("isFirstTimeOpen", Context.MODE_PRIVATE)
-        val isFirstTimeOpen = sharedPreferences.getBoolean("isFirstTimeOpen", true)
-
-        if (isFirstTimeOpen) {
-            // Start initial run
-            Intent(this, SetupActivity::class.java).also {
-                startActivity(it)
-            }
-            sharedPreferences.edit().putBoolean("isFirstTimeOpen", false).apply()
-        } else {
-            CheckPermissionUtils.checkAccessibilityPermission(this)
-        }
-
-*/
+        /* val sharedPreferences = getSharedPreferences("isFirstTimeOpen", Context.MODE_PRIVATE)
+         val isFirstTimeOpen = sharedPreferences.getBoolean("isFirstTimeOpen", true)
+         if (isFirstTimeOpen) {
+             // Start initial run
+             Intent(this, SetupActivity::class.java).also {
+                 startActivity(it)
+             }
+val sharedPreferences = getSharedPreferences("isFirstTimeOpen", Context.MODE_PRIVATE)
+         } else {
+             CheckPermissionUtils.checkAccessibilityPermission(this)
+         }
+ */
 //        val bottomNavigationView = binding.bottomNavMenu
 
         bottomNavController = findNavController(R.id.fcvBotNav)
@@ -103,7 +101,7 @@ class MainActivity : AppCompatActivity() {
             val navController = findNavController(R.id.monitor_start)
             return navController.navigateUp() || super.onSupportNavigateUp()
         }else{
-           val  navController = findNavController(R.id.list_user_fcv)
+            val  navController = findNavController(R.id.list_user_fcv)
             return navController.navigateUp() || super.onSupportNavigateUp()
         }
 
@@ -159,17 +157,14 @@ class MainActivity : AppCompatActivity() {
         }
 
         /* if(requestCode == Constants.REQUEST_CODE_PERMISSIONS){
-
              if(allPermissionGranted()){
                  startCamera()
              }else{
                  Toast.makeText(this,
                      "Permission not Granted",
                      Toast.LENGTH_SHORT).show()
-
                 // finish()
              }
-
          }*/
     }
 

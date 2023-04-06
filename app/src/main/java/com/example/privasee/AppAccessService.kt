@@ -38,14 +38,11 @@ class AppAccessService : AccessibilityService() {
                     previousPackageName = currentlyOpenedApp
                     // start intent service, start verifying etc
                     Log.d("tagimandos", "monitoring $appName")
-                    val intent = Intent(this, DbQueryIntentService::class.java)
-                    intent.putExtra("query", "insertRecord")
-                    intent.putExtra("appName", appName)
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                    ContextCompat.startForegroundService(this, intent)
 
-                  //  val intent = Intent(this, MonitorService::class.java)
-                   // startService(intent)
+
+                    val intent = Intent(this, MonitorService::class.java)
+                    intent.putExtra("appName", appName)
+                    startService(intent)
 
                 }
 

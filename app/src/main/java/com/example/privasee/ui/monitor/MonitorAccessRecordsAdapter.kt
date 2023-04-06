@@ -1,10 +1,19 @@
 package com.example.privasee.ui.monitor
 
+import android.content.Intent
+import android.graphics.BitmapFactory
+import android.util.Base64
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
+import androidx.navigation.findNavController
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.privasee.database.model.Record
+import com.example.privasee.database.model.User
 import com.example.privasee.databinding.RecyclerItemMonitorRecordsBinding
+import com.example.privasee.ui.users.UserListAdapter
+import com.example.privasee.ui.users.UserListFragmentDirections
 import java.text.SimpleDateFormat
 import java.time.Month
 import java.util.*
@@ -14,6 +23,7 @@ class MonitorAccessRecordsAdapter(): RecyclerView.Adapter<MonitorAccessRecordsAd
 
     inner class UserViewHolder(val binding: RecyclerItemMonitorRecordsBinding): RecyclerView.ViewHolder(binding.root)
     private var recordList = emptyList<Record>()
+    private var userList = emptyList<User>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -30,6 +40,13 @@ class MonitorAccessRecordsAdapter(): RecyclerView.Adapter<MonitorAccessRecordsAd
             val year = currentRecord.year
             val appName = currentRecord.packageName
             val time = currentRecord.time
+            val status = currentRecord.status
+            val imageString = currentRecord.image
+
+            //convert it to byte array
+            val data = Base64.decode(imageString, Base64.DEFAULT)
+            //now convert it to bitmap
+            val bmp = BitmapFactory.decodeByteArray(data, 0, data.size)
 
             val dateFormat = "$month $day $year"
 
@@ -40,6 +57,8 @@ class MonitorAccessRecordsAdapter(): RecyclerView.Adapter<MonitorAccessRecordsAd
                 tvRecordsDate.text = dateFormat
                 tvRecordsTime.text = timeString
                 tvRecordsAppName.text = appName
+                tvRecordsStatus.text = status
+                tvImageView.setImageBitmap(bmp)
             }
         } else {
             val emptyString = "-"
@@ -48,9 +67,19 @@ class MonitorAccessRecordsAdapter(): RecyclerView.Adapter<MonitorAccessRecordsAd
                 tvRecordsDate.text = emptyString
                 tvRecordsTime.text = emptyString
                 tvRecordsAppName.text = tempString
+                tvRecordsStatus.text = emptyString
+            }
+        }
+
+
+        holder.binding.apply {
+            RecyclerItemMonitorRecords.setOnClickListener {
+                val action = MonitoringAccessRecordsDirections.actionAccessRecordsToViewImage(currentRecord)
+                RecyclerItemMonitorRecords.findNavController().navigate(action)
             }
         }
     }
+
 
     override fun getItemCount(): Int {
         return recordList.count()
