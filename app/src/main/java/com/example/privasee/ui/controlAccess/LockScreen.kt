@@ -1,7 +1,6 @@
 package com.example.privasee.ui.controlAccess
 
 import androidx.appcompat.app.AlertDialog
-import com.example.privasee.ui.monitor.MyForegroundServices
 
 
 class LockScreen(private val activity: MyForegroundServices){

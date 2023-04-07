@@ -43,7 +43,7 @@ class MonitorStart : Fragment() {
         navController = navHostFragment.navController
 
         // set up the ActionBar
-        setupActionBarWithNavController(activity as AppCompatActivity, navController)
+      //  setupActionBarWithNavController(activity as AppCompatActivity, navController)
 
     }
 

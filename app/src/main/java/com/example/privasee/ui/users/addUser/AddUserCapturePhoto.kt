@@ -1,11 +1,14 @@
 package com.example.privasee.ui.users.addUser
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Base64
 import android.util.Log
 import android.widget.Toast
@@ -18,16 +21,20 @@ import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
 import com.chaquo.python.Python
 import com.chaquo.python.android.AndroidPlatform
 import com.example.privasee.R
+import com.example.privasee.database.model.Record
+import com.example.privasee.database.viewmodel.RecordViewModel
 import com.example.privasee.databinding.ActivityAddUserCapturePhotoBinding
 import com.example.privasee.ui.monitor.Constants
 import kotlinx.android.synthetic.main.activity_add_user_capture_photo.*
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
+import java.lang.System.out
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.ExecutorService
@@ -42,7 +49,9 @@ class AddUserCapturePhoto: AppCompatActivity() {
     private lateinit var outputDirectory: File
     private lateinit var cameraExecutor: ExecutorService
     private lateinit var loadingDialog : LoadingDialog
-    var counter = 0
+    var counter = 1
+
+    private lateinit var mRecordViewModel: RecordViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityAddUserCapturePhotoBinding.inflate(layoutInflater)
@@ -76,6 +85,51 @@ class AddUserCapturePhoto: AppCompatActivity() {
             takePhoto()
 
         }
+        binding.btnCameraPermission.setOnClickListener {
+            checkForPermissions(android.Manifest.permission.CAMERA, "Camera", com.example.privasee.Constants.REQUEST_CODE_PERMISSIONS)
+        }
+    }
+
+    private fun checkForPermissions(permission: String, name: String, requestCode: Int){ //if not granted, it asks for permission
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+            when {
+
+                ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED -> {
+                    Toast.makeText(this, "$name permission granted", Toast.LENGTH_SHORT).show()
+                }
+                shouldShowRequestPermissionRationale(permission) -> showDialog(permission, name, requestCode) //explains why permission is needed after they rejected it the first time
+
+                else -> {
+                    goToSettings()
+                    finish()
+                    startActivity(getIntent());
+                }
+            }
+        }
+    }
+
+    private fun goToSettings() {
+        val intent = Intent()
+        intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+        val uri = Uri.fromParts("package", this.packageName, null)
+        intent.data = uri
+        this.startActivity(intent)
+    }
+
+    private fun showDialog (permission: String, name: String, requestCode: Int){
+        val builder = AlertDialog.Builder(this)
+
+        builder.apply {
+            setMessage("Permission to access your $name is required to use this app. If you deny this again, you will have to manually add permission via settings.")
+            setTitle("Permission required")
+            setPositiveButton("ok") { dialog, which ->
+                ActivityCompat.requestPermissions(this@AddUserCapturePhoto, arrayOf(permission), requestCode)
+                finish()
+                startActivity(getIntent());
+            }
+        }
+        val dialog: AlertDialog = builder.create()
+        dialog.show()
     }
 
     private fun getOutputDirectory(): File{
@@ -102,6 +156,8 @@ class AddUserCapturePhoto: AppCompatActivity() {
             Locale.getDefault())
             .format(System
                 .currentTimeMillis()) + ".jpg"
+
+      //  var fileName = "$counter.jpg"
 
         val photoFile = File(
             "$fullpath",fileName)
@@ -161,11 +217,9 @@ class AddUserCapturePhoto: AppCompatActivity() {
                 putBoolean("isThereAFace", true)
             }.apply()
 
-            for(i in 1..20){
+            for(i in counter..20){
                 takePhoto()
             }
-
-
         }
     }
 
@@ -186,7 +240,12 @@ class AddUserCapturePhoto: AppCompatActivity() {
         if(str == "No face detected"){
             // val imageStringSplit = string.substring(string.lastIndexOf("/")+1); //split file path, take last(file)
 
-            Toast.makeText(this, "No face detected", Toast.LENGTH_LONG).show()
+           // Toast.makeText(this, "No face detected", Toast.LENGTH_LONG).show()
+           // out.flush()
+           // out.close()
+
+            noFaceDetectedDialog ()
+
         }else{
             //convert it to byte array
             val data = Base64.decode(str, Base64.DEFAULT)
@@ -217,13 +276,25 @@ class AddUserCapturePhoto: AppCompatActivity() {
     }
 
     private fun createDirectoryAndSaveFile(bitmap: Bitmap, string: String) {
+
+        val sp = PreferenceManager.getDefaultSharedPreferences(this)
+        val editor = sp.edit()
+
         // var path = getOutputDirectory()
         var pathFd = "$outputDirectory/face recognition"
+
         var fullpath = File(pathFd)
 
         val imageStringSplit = string.substring(string.lastIndexOf("/")+1); //split file path, take last(file)
 
         val file = File("$pathFd", imageStringSplit)
+
+        if((sp.getString("ownerPic", "none")) == "none") {
+
+            editor.apply() {
+                putString("ownerPic",file.toString() )
+            }.apply()
+        }
 
         if (!fullpath.exists()) {
             fullpath.mkdirs()
@@ -237,7 +308,7 @@ class AddUserCapturePhoto: AppCompatActivity() {
             val out = FileOutputStream(file)
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out)
 
-            val sp = PreferenceManager.getDefaultSharedPreferences(this)
+          /*  val sp = PreferenceManager.getDefaultSharedPreferences(this)
             val editor = sp.edit()
 
             editor.apply(){
@@ -248,9 +319,18 @@ class AddUserCapturePhoto: AppCompatActivity() {
                 loadingDialog.dismissDialog()
                 this.finish()
             }
+*/
+            counter++
 
-            var v = sp.getInt("loadingStopCounter", 0).toString()
-            imageNumber.setText("$v")
+            if(counter == 20){
+                loadingDialog.dismissDialog()
+                this.finish()
+            }
+
+
+         //   var v = sp.getInt("loadingStopCounter", 0).toString()
+            imageNumber.setText("$counter")
+
           //  Toast.makeText(this, "$v", Toast.LENGTH_SHORT).show()
             //faceRecognition(string)
             out.flush()

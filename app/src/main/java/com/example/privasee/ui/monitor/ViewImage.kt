@@ -51,12 +51,16 @@ class ViewImage : Fragment() {
 
 
       val imageString = args.currentRecord.image
-        //convert it to byte array
+
+     /*   //convert it to byte array
         val data = Base64.decode(imageString, Base64.DEFAULT)
         //now convert it to bitmap
         val bmp = BitmapFactory.decodeByteArray(data, 0, data.size)
 
-        binding.ViewSnapshotImage.setImageBitmap(bmp)
+       */
+        val bitmap = BitmapFactory.decodeFile(imageString)
+
+        binding.ViewSnapshotImage.setImageBitmap(bitmap)
 
         val callback = object : OnBackPressedCallback(true){
             override fun handleOnBackPressed() {

@@ -22,11 +22,11 @@
         android:label="fragment_user"
         tools:layout="@layout/fragment_user_list" >
         <action
-            android:id="@+id/action_userFragment_to_addUserFragment"
-            app:destination="@id/addUserFragment" />
-        <action
             android:id="@+id/action_userFragment_to_updateUserFragment"
             app:destination="@id/updateUserFragment" />
+        <action
+            android:id="@+id/action_userFragment_to_addUserFragment"
+            app:destination="@id/addUserFragment" />
     </fragment>
 
     <fragment

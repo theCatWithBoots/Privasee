@@ -79,7 +79,7 @@ val sharedPreferences = getSharedPreferences("isFirstTimeOpen", Context.MODE_PRI
             putString("workingDirectory", getOutputDirectory().toString())
         }.apply()
 
-        autoGivePermission()
+       // autoGivePermission()
 
     }
     private fun getOutputDirectory(): File {

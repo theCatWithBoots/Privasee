@@ -44,17 +44,4 @@
     </fragment>
 
 
-
-    <fragment
-        android:id="@+id/setOwner"
-        android:name="com.example.privasee.ui.controlAccess.SetupOwnerFragment"
-        android:label="ControlAccessFragment"
-        tools:layout="@layout/fragment_setup_owner" >>
-
-        <action
-            android:id="@+id/action_setOwner_to_appLock2"
-            app:destination="@id/appLock" />
-    </fragment>
-
-
 </navigation>

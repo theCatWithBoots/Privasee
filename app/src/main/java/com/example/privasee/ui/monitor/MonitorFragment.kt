@@ -23,6 +23,7 @@ import androidx.fragment.app.Fragment
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.navigation.fragment.findNavController
 import androidx.preference.PreferenceManager
+import com.example.privasee.Constants
 import com.example.privasee.R
 import com.example.privasee.databinding.FragmentMonitorBinding
 import com.example.privasee.ui.monitor.gallery.SeeSnapshots
@@ -74,16 +75,13 @@ class MonitorFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        appSnapshots.setOnClickListener {
-            findNavController().navigate(R.id.action_monitorFragment_to_monitorFragmentAppSnapshots)
-        }
-
-        timedSnapshots.setOnClickListener {
-            findNavController().navigate(R.id.action_monitorFragment_to_monitorFragmenTimedSnapshots)
-        }
 
         btnAccessRecords.setOnClickListener {
             findNavController().navigate(R.id.action_monitorFragment_to_AccessRecords)
+        }
+
+        btnEnableCamera.setOnClickListener {
+            checkForPermissions(android.Manifest.permission.CAMERA, "Camera", Constants.REQUEST_CODE_PERMISSIONS)
         }
 
         val sp = PreferenceManager.getDefaultSharedPreferences(requireContext())
@@ -94,8 +92,43 @@ class MonitorFragment : Fragment() {
         btnresult.text = "$r"
 
     }
+    private fun checkForPermissions(permission: String, name: String, requestCode: Int){ //if not granted, it asks for permission
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+            when {
 
+                ContextCompat.checkSelfPermission(requireContext(), permission) == PackageManager.PERMISSION_GRANTED -> {
+                    Toast.makeText(requireContext(), "$name permission granted", Toast.LENGTH_SHORT).show()
+                }
+                shouldShowRequestPermissionRationale(permission) -> showDialog(permission, name, requestCode) //explains why permission is needed after they rejected it the first time
 
+                else -> {
+                    goToSettings()
+                }
+            }
+        }
+    }
+
+    private fun goToSettings() {
+        val intent = Intent()
+        intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+        val uri = Uri.fromParts("package", requireContext().packageName, null)
+        intent.data = uri
+        requireContext().startActivity(intent)
+    }
+
+    private fun showDialog (permission: String, name: String, requestCode: Int){
+        val builder = AlertDialog.Builder(requireContext())
+
+        builder.apply {
+            setMessage("Permission to access your $name is required to use this app. If you deny this again, you will have to manually add permission via settings.")
+            setTitle("Permission required")
+            setPositiveButton("ok") { dialog, which ->
+                ActivityCompat.requestPermissions(requireActivity(), arrayOf(permission), requestCode)
+            }
+        }
+        val dialog: AlertDialog = builder.create()
+        dialog.show()
+    }
 
 
 }

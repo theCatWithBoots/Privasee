@@ -1,19 +1,16 @@
 package com.example.privasee.ui.monitor
 
-import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.util.Base64
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.view.isVisible
 import androidx.navigation.findNavController
-import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.privasee.database.model.Record
 import com.example.privasee.database.model.User
 import com.example.privasee.databinding.RecyclerItemMonitorRecordsBinding
-import com.example.privasee.ui.users.UserListAdapter
-import com.example.privasee.ui.users.UserListFragmentDirections
 import java.text.SimpleDateFormat
 import java.time.Month
 import java.util.*
@@ -43,10 +40,15 @@ class MonitorAccessRecordsAdapter(): RecyclerView.Adapter<MonitorAccessRecordsAd
             val status = currentRecord.status
             val imageString = currentRecord.image
 
-            //convert it to byte array
+          /*  //convert it to byte array
             val data = Base64.decode(imageString, Base64.DEFAULT)
             //now convert it to bitmap
             val bmp = BitmapFactory.decodeByteArray(data, 0, data.size)
+
+            val bmp2 = reduceBitmapSize(bmp,  1000)
+            */
+
+            val bitmap = BitmapFactory.decodeFile(imageString)
 
             val dateFormat = "$month $day $year"
 
@@ -58,7 +60,7 @@ class MonitorAccessRecordsAdapter(): RecyclerView.Adapter<MonitorAccessRecordsAd
                 tvRecordsTime.text = timeString
                 tvRecordsAppName.text = appName
                 tvRecordsStatus.text = status
-                tvImageView.setImageBitmap(bmp)
+                tvImageView.setImageBitmap(bitmap)
             }
         } else {
             val emptyString = "-"
@@ -79,8 +81,6 @@ class MonitorAccessRecordsAdapter(): RecyclerView.Adapter<MonitorAccessRecordsAd
             }
         }
     }
-
-
     override fun getItemCount(): Int {
         return recordList.count()
     }

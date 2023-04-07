@@ -189,19 +189,11 @@ class ControlAccessFragmentScreenAppLock : Fragment() {
         accessibility.setOnClickListener {
             CheckPermissionUtils.checkAccessibilityPermission(requireContext())
         }
-
-        btnSelectApps.setOnClickListener {
-            val intent = Intent(requireContext(), UserAppControllingActivity::class.java)
-            startActivity(intent)
-        }
-
+        
         timeButton2.setOnClickListener {
             popTimePicker()
         }
 
-        setOwner.setOnClickListener {
-            findNavController().navigate(R.id.action_appLock_to_setOwner)
-        }
     }
 
     fun <T> List<T>.toArrayList(): ArrayList<T>{

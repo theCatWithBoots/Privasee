@@ -4,10 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI.setupActionBarWithNavController
 import com.example.privasee.R
 import com.example.privasee.databinding.FragmentUserListNavhostBinding
@@ -25,6 +27,7 @@ class UserListNavHost : Fragment() {
     ): View {
         _binding = FragmentUserListNavhostBinding.inflate(inflater, container, false)
 
+
         return binding.root
     }
 
@@ -34,7 +37,7 @@ class UserListNavHost : Fragment() {
 
         val navHostFragment = childFragmentManager.findFragmentById(R.id.fcvUser) as NavHostFragment
         navController = navHostFragment.navController
-        setupActionBarWithNavController(activity as AppCompatActivity, navController)
+       // setupActionBarWithNavController(activity as AppCompatActivity, navController)
     }
 
 

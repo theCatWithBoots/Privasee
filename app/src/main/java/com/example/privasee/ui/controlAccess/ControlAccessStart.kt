@@ -8,9 +8,11 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toolbar
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI.setupActionBarWithNavController
 import com.example.privasee.R
 import com.example.privasee.databinding.FragmentControlAccessStartBinding
@@ -38,7 +40,7 @@ class ControlAccessStart : Fragment() {
         navController = navHostFragmentControlAccess.navController
 
         // set up the ActionBar
-        setupActionBarWithNavController(activity as AppCompatActivity, navController)
+      //  setupActionBarWithNavController(activity as AppCompatActivity, navController)
 
     }
 

@@ -17,6 +17,8 @@ import com.example.privasee.database.model.User
 import com.example.privasee.database.viewmodel.AppViewModel
 import com.example.privasee.database.viewmodel.UserViewModel
 import com.example.privasee.databinding.FragmentSetupOwnerBinding
+import com.example.privasee.ui.users.addUser.AddUserCapturePhoto
+import com.example.privasee.ui.users.userInfoUpdate.userAppControl.applock.BlockScreen
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -56,6 +58,12 @@ class SetupOwnerFragment : Fragment() {
                 Toast.makeText(requireContext(), "Please input your name", Toast.LENGTH_SHORT).show()
 
 
+        }
+
+        binding.btnOwnerRegisterFace.setOnClickListener {
+            val intent = Intent(requireContext(), AddUserCapturePhoto::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(intent)
         }
 
         return binding.root

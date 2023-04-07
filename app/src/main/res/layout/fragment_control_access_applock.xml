@@ -52,16 +52,6 @@
 
 
     <Button
-        android:id="@+id/btnSelectApps"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="160dp"
-        android:layout_marginBottom="56dp"
-        android:text="select"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <Button
         android:id="@+id/btnTestService1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -84,17 +74,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.592" />
-
-    <Button
-        android:id="@+id/setOwner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Set Owner"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.847" />
 
     <Spinner
         android:id="@+id/spinnerUsers"

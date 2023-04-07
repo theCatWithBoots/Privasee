@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.MenuProvider
 import androidx.core.view.isVisible
@@ -101,6 +102,16 @@ class UserInfoUpdateFragment : Fragment(), MenuProvider {
             findNavController().navigate(R.id.action_updateUserFragment_to_userFragment)
         }
 
+
+        val callback = object : OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+                findNavController().navigate(R.id.action_addUserFragment_to_userFragment)
+            }
+        }
+
+        requireActivity().onBackPressedDispatcher.addCallback (callback)
+
+        return binding.root
         return binding.root
     }
 

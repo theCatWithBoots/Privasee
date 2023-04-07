@@ -19,8 +19,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.preference.PreferenceManager
 import com.example.privasee.R
 import com.example.privasee.databinding.FragmentControlAccessScreentimelimitBinding
-import com.example.privasee.ui.monitor.MyForegroundServices
-import kotlinx.android.synthetic.main.fragment_control_access_applock.*
 import kotlinx.android.synthetic.main.fragment_control_access_screentimelimit.*
 import java.util.*
 
@@ -54,23 +52,20 @@ class ControlAccessFragmentScreenTimeLimit : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-       // editTime.inputType = InputType.TYPE_CLASS_NUMBER
 
         val sp = PreferenceManager.getDefaultSharedPreferences(requireContext())
-
-        /*if(sp.contains("theTime") != null){
-            var t = sp.getLong("theTime", 0).toInt()
-            editTime.setText("$t")
-        }else{
-            editTime.setText("0")
-        }*/
+        val editor = sp.edit()
 
         setTimer.setOnClickListener {
             val active = devicePolicyManager!!.isAdminActive(compName!!)
+            var timerString = timeButton.getText().toString()
 
-            if (active) {
-                //devicePolicyManager!!.lockNow()
-                var timerString = timeButton.getText().toString()
+            if (active && timerString != "select time") {
+
+                editor.apply() {
+                    putBoolean("IS_ACTIVITY_RUNNING", true)
+                }.apply()
+
 
                 val units = timerString.split(":".toRegex()).dropLastWhile { it.isEmpty() }
                     .toTypedArray() //will break the string up into an array
@@ -83,27 +78,21 @@ class ControlAccessFragmentScreenTimeLimit : Fragment() {
 
                 var timerInt = duration.toLong()
 
-                val editor = sp.edit()
-                editor.apply(){
-                    putLong("theTime", timerInt)
-                }.apply()
+                timeSet.setText("Timer has been set")
 
-                var t = sp.getLong("theTime", 0)
+                requireActivity().startForegroundService(
+                    Intent(context, MyForegroundServices::class.java)
+                        .putExtra("screenTimer",timerInt))
+
+            } else if(active && timerString == "select time"){
                 Toast.makeText(
                     requireContext(),
-                    "Timer has been set to $t minute(s)",
+                    "You need to set Timer first",
                     Toast.LENGTH_SHORT
                 ).show()
+            }
 
-                editor.apply(){
-                    putBoolean("isLockerActive", true)
-                }.apply()
-
-                timeSet.setText("Timer has been set to $t minute(s)")
-
-                enableFaceLock.setVisibility(View.GONE)
-
-            } else {
+            else {
                 timeSet.setText("You need to enable Admin Permission first")
 
                 Toast.makeText(
@@ -115,66 +104,19 @@ class ControlAccessFragmentScreenTimeLimit : Fragment() {
         }
 
         cancelTimer.setOnClickListener {
-            val sp = PreferenceManager.getDefaultSharedPreferences(requireContext())
-            val editor = sp.edit()
 
-            if ((sp.getBoolean("isLockerActive", false))) {
-
-                val editor = sp.edit()
-                editor.apply(){
-                    putLong("theTime", 0)
-                }.apply()
-
-                Toast.makeText(
-                    requireContext(),
-                    "Timer has been stopped",
-                    Toast.LENGTH_SHORT
-                ).show()
-
-                editor.apply(){
-                    putBoolean("isLockerActive", false)
-                }.apply()
-
-                timeSet.setText("Timer is not set")
-
-                enableFaceLock.setVisibility(View.VISIBLE)
-
-            } else {
-                Toast.makeText(
-                    requireContext(),
-                    "Timer is not active",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-        }
-
-        enableFaceLock.setOnClickListener {
-            val editor = sp.edit()
-
-            editor.apply(){
-                putBoolean("isLockerActive", false)
+            editor.apply() {
+                putBoolean("IS_ACTIVITY_RUNNING", false)
             }.apply()
 
-            editor.apply(){
-                putBoolean("isFaceLockActive", true)
-            }.apply()
+            timeSet.setText("Timer is not set")
 
-            faceLockStatus.setText("Face Lock is Active")
+                requireActivity().stopService(
+                    Intent(context, MyForegroundServices::class.java))
 
-            setTimer.setVisibility(View.GONE)
-            enableFaceLock.setVisibility(View.GONE)
         }
 
-        disableFaceLock.setOnClickListener {
-            val editor = sp.edit()
 
-            editor.apply(){
-                putBoolean("isFaceLockActive", false)
-            }.apply()
-
-            setTimer.setVisibility(View.VISIBLE)
-            enableFaceLock.setVisibility(View.VISIBLE)
-        }
 
         givePermission.setOnClickListener {
             val intent = Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN)
@@ -266,35 +208,13 @@ class ControlAccessFragmentScreenTimeLimit : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        val sp = PreferenceManager.getDefaultSharedPreferences(requireContext())
-        var t = sp.getLong("theTime", 0)
 
-        if((sp.getBoolean("isLockerActive", false))){
-            LocalBroadcastManager.getInstance(requireContext()).registerReceiver(broadcastReceiver, IntentFilter(
+        LocalBroadcastManager.getInstance(requireContext()).registerReceiver(broadcastReceiver, IntentFilter(
                 MyForegroundServices.COUNTDOWN_BR))
-            timeSet.setText("Timer has been set to $t minute(s)")
-            enableFaceLock.setVisibility(View.GONE)
-        }else{
-            timeSet.setText("Timer is not set")
 
-        }
-
-        if((sp.getBoolean("isFaceLockActive", false))){
-            setTimer.setVisibility(View.GONE)
-            enableFaceLock.setVisibility(View.GONE)
-
-            var counter = sp.getInt("flcounter", 0)
-
-            faceLockStatus.setText("Face Lock is Active. Counter: $counter")
-        }else{
-            faceLockStatus.setText("Face Lock is not Active")
-        }
-
-      // requireActivity().registerReceiver(broadcastReceiver, IntentFilter())
         val isActive = devicePolicyManager!!.isAdminActive(compName!!)
         disablePermission.setVisibility(if (isActive) View.VISIBLE else View.GONE)
         givePermission.setVisibility(if (isActive) View.GONE else View.VISIBLE)
-
 
     }
 

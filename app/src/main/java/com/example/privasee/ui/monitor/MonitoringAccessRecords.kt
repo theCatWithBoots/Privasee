@@ -18,7 +18,7 @@ import com.example.privasee.database.viewmodel.RecordViewModel
 import com.example.privasee.database.viewmodel.UserViewModel
 import com.example.privasee.databinding.FragmentMonitorAccessRecordsBinding
 import com.example.privasee.ui.users.UserListAdapter
-import com.example.privasee.ui.users.UserListFragmentDirections
+
 import kotlinx.android.synthetic.main.recycler_item_monitor_view_image.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

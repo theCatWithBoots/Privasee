@@ -10,40 +10,11 @@
         android:name="com.example.privasee.ui.monitor.MonitorFragment"
         android:label="SetupOwnerFragment"
         tools:layout="@layout/fragment_monitor" >
-
-        <action
-            android:id="@+id/action_monitorFragment_to_monitorFragmentAppSnapshots"
-            app:destination="@id/monitorFragmentAppSnapshots" />
-        <action
-            android:id="@+id/action_monitorFragment_to_monitorFragmenTimedSnapshots"
-            app:destination="@id/monitorFragmenTimedSnapshots" />
-        <action
+    <action
             android:id="@+id/action_monitorFragment_to_AccessRecords"
             app:destination="@id/AccessRecords" />
     </fragment>
 
-    <fragment
-        android:id="@+id/monitorFragmentAppSnapshots"
-        android:name="com.example.privasee.ui.monitor.MonitorFragmentAppSnapshots"
-        android:label="SetupOwnerFragment"
-        tools:layout="@layout/fragment_monitor_app_snapshots" >
-
-        <action
-            android:id="@+id/action_monitorFragmentAppSnapshots_to_monitorFragment"
-            app:destination="@id/monitorFragment" />
-    </fragment>
-
-
-    <fragment
-        android:id="@+id/monitorFragmenTimedSnapshots"
-        android:name="com.example.privasee.ui.monitor.MonitorFragmentTimedSnapshots"
-        android:label="SetupOwnerFragment"
-        tools:layout="@layout/fragment_monitor_timed_snapshots" >
-
-        <action
-            android:id="@+id/action_monitorFragmenTimedSnapshots_to_monitorFragment"
-            app:destination="@id/monitorFragment" />
-    </fragment>
 
     <fragment
         android:id="@+id/AccessRecords"

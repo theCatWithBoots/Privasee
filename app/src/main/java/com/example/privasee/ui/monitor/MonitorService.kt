@@ -182,12 +182,12 @@ class MonitorService :  LifecycleService() {
 
 
             createDirectoryAndSaveFile(bmp, string)
-            faceRecognition(bmp)
+            faceRecognition(bmp, string)
         }
 
     }
 
-    private fun faceRecognition(bitmap: Bitmap){
+    private fun faceRecognition(bitmap: Bitmap, stringImage: String){
 
         val sp = PreferenceManager.getDefaultSharedPreferences(this)
 
@@ -238,12 +238,21 @@ class MonitorService :  LifecycleService() {
 
         Toast.makeText(this, "$objFinal", Toast.LENGTH_LONG).show()
 
+        val intent = Intent(this, DbQueryIntentService::class.java)
+        intent.putExtra("image", stringImage)
+        intent.putExtra("query", "insertRecord")
+        intent.putExtra("appName", appname)
+        intent.putExtra("status", objFinal.toString())
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        ContextCompat.startForegroundService(this, intent)
+        isSnapshotDone = true
+        this.stopSelf()
+
             val editor = sp.edit()
             editor.apply(){
                 putBoolean("result", objFinal.toBoolean())
             }.apply()
 
-        this.stopSelf()
        // isSnapshotDone = true
 
         //sendBroadcastMessage(objFinal.toString())
