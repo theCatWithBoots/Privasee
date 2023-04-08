@@ -36,9 +36,9 @@ class SetupActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         // Make this activity the nav host fragment for the navgraph for the initial run fragments
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fcvSetup) as NavHostFragment
-        setupNavController = navHostFragment.navController
-        setupActionBarWithNavController(setupNavController)
+    //    val navHostFragment = supportFragmentManager.findFragmentById(R.id.fcvSetup) as NavHostFragment
+      //  setupNavController = navHostFragment.navController
+//        setupActionBarWithNavController(setupNavController)
 
     }
 

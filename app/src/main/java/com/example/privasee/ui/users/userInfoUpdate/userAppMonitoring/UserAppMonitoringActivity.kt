@@ -39,7 +39,7 @@ class UserAppMonitoringActivity : AppCompatActivity() {
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.fcvMonitoring) as NavHostFragment
         navController = navHostFragment.navController
-        setupActionBarWithNavController(navController)
+        //setupActionBarWithNavController(navController)
 
         val userId = intent.extras?.getInt("userId")
         val bundle = Bundle()

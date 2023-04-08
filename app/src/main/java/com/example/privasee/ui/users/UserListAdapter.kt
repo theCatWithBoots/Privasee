@@ -8,6 +8,7 @@ import androidx.core.view.isVisible
 import androidx.navigation.findNavController
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.privasee.R
 import com.example.privasee.database.model.Record
 import com.example.privasee.database.model.User
 import com.example.privasee.databinding.RecyclerItemUserBinding
@@ -40,12 +41,18 @@ class UserListAdapter(val applicationContext: Context) : RecyclerView.Adapter<Us
             var pathFd = (sp.getString("ownerPic", "none"))
             val bitmap = BitmapFactory.decodeFile(pathFd)
 
-           imageView.setImageBitmap(bitmap)
 
-            if (currentUser.isOwner)
+
+            if (currentUser.isOwner){
                 tvIsOwner.text = owner
-            else
+                imageView.setImageBitmap(bitmap)
+            }
+            else{
+
                 tvIsOwner.isVisible = false
+                imageView.setBackgroundResource(R.drawable.img_1)
+            }
+
 
             recyclerItemUser.setOnClickListener {
                 val action = UserListFragmentDirections.actionUserFragmentToUpdateUserFragment(currentUser)

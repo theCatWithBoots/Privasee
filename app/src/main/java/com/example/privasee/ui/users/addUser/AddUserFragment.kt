@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -48,26 +49,21 @@ class AddUserFragment : Fragment() {
             val name = binding.etAddUserName.text.toString()
             val user = User(0, name, false)
 
-            /*if (checkInput(name)) {
-                mUserViewModel.addUser(user)
-                job = lifecycleScope.launch(Dispatchers.IO) {
-                    val latestUser = mUserViewModel.getUserId(name)
-                    val appList = mAppViewModel.getAllData()
-                    for (app in appList) {
-                        val restriction = Restriction(0, app.appName, monitored = false, controlled = false, latestUser, app.id)
-                        mRestrictionViewModel.addRestriction(restriction)
-                    }
-                }
-                findNavController().navigate(R.id.action_addUserFragment_to_userFragment)
-            } else
-                Toast.makeText(requireContext(), "Fill all fields", Toast.LENGTH_SHORT).show()*/
-
             if (checkInput(name)) {
                 mUserViewModel.addUser(user)
                 findNavController().navigate(R.id.action_addUserFragment_to_userFragment)
             } else
                 Toast.makeText(requireContext(), "Fill all fields", Toast.LENGTH_SHORT).show()
         }
+
+
+        val callback = object : OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+                findNavController().navigate(R.id.action_addUserFragment_to_userFragment)
+            }
+        }
+
+        requireActivity().onBackPressedDispatcher.addCallback (callback)
 
         return binding.root
     }

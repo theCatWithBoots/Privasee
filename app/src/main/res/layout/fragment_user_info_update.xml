@@ -67,6 +67,18 @@
         app:layout_constraintStart_toStartOf="@+id/tvRestrictionType"
         app:layout_constraintTop_toBottomOf="@+id/tvRestrictionType" />
 
+    <Button
+        android:id="@+id/reEnroll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Re-Enroll Face"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.507"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnUserSetControlled"
+        app:layout_constraintVertical_bias="0.38" />
+
     <TextView
         android:id="@+id/tvRestrictionType"
         android:layout_width="wrap_content"

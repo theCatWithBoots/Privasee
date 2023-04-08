@@ -35,14 +35,18 @@ class AppAccessService : AccessibilityService() {
                     previousPackageName = currentlyOpenedApp
 
                 } else {
-                    previousPackageName = currentlyOpenedApp
-                    // start intent service, start verifying etc
-                    Log.d("tagimandos", "monitoring $appName")
 
+                    for(packageName in packageNames){
+                        if(packageName == currentlyOpenedApp){
+                            previousPackageName = currentlyOpenedApp
+                            // start intent service, start verifying etc
+                            Log.d("tagimandos", "monitoring $appName")
 
-                    val intent = Intent(this, MonitorService::class.java)
-                    intent.putExtra("appName", appName)
-                    startService(intent)
+                            val intent = Intent(this, MonitorService::class.java)
+                            intent.putExtra("appName", appName)
+                            startService(intent)
+                        }
+                    }
 
                 }
 
@@ -86,7 +90,7 @@ class AppAccessService : AccessibilityService() {
             if (action == "addLock") {
                 Log.d("tagimandos", "add lock$packageNames")
                 for(packageName in packageNames) {
-                    this.packageNames.add(packageName)
+                   // this.packageNames.add(packageName)
                     this.controlledApps.add(packageName)
                 }
             }
@@ -94,7 +98,7 @@ class AppAccessService : AccessibilityService() {
             if (action == "removeLock") {
                 Log.d("tagimandos", "remove lock $packageNames")
                 for(packageName in packageNames) {
-                    this.packageNames.remove(packageName)
+                  //  this.packageNames.remove(packageName)
                     this.controlledApps.remove(packageName)
                 }
             }

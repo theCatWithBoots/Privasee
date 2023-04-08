@@ -6,6 +6,7 @@ import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
@@ -18,6 +19,7 @@ import com.example.privasee.database.viewmodel.UserViewModel
 import com.example.privasee.databinding.ActivityMainBinding
 import com.example.privasee.ui.initialRun.SetupActivity
 import com.example.privasee.utils.CheckPermissionUtils
+import kotlinx.android.synthetic.main.activity_main.*
 import java.io.File
 
 class MainActivity : AppCompatActivity() {
@@ -29,10 +31,14 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
 
 
-//        supportActionBar?.hide()
+      supportActionBar?.hide()
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+
+     //  val toolbar = findViewById<Toolbar>(R.id.toolbar)
+       //setSupportActionBar(toolbar)
 
         /* val sharedPreferences = getSharedPreferences("isFirstTimeOpen", Context.MODE_PRIVATE)
          val isFirstTimeOpen = sharedPreferences.getBoolean("isFirstTimeOpen", true)
@@ -79,9 +85,10 @@ val sharedPreferences = getSharedPreferences("isFirstTimeOpen", Context.MODE_PRI
             putString("workingDirectory", getOutputDirectory().toString())
         }.apply()
 
-       // autoGivePermission()
+        //autoGivePermission()
 
     }
+
     private fun getOutputDirectory(): File {
         val mediaDir = externalMediaDirs.firstOrNull()?.let {mFile->
             File(mFile,resources.getString(R.string.app_name)).apply {

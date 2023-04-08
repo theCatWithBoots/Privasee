@@ -6,6 +6,7 @@ import android.os.IBinder
 import android.util.Log
 import androidx.lifecycle.LifecycleService
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import com.example.privasee.ui.users.userInfoUpdate.userAppControl.applock.BlockScreen
 import com.example.privasee.ui.users.userInfoUpdate.userAppControl.applock.BlockScreen2
 import java.util.concurrent.TimeUnit
 import kotlin.collections.ArrayList

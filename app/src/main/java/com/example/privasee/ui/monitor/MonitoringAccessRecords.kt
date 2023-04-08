@@ -7,12 +7,15 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.privasee.R
 import com.example.privasee.database.model.Record
 import com.example.privasee.database.viewmodel.RecordViewModel
 import com.example.privasee.database.viewmodel.UserViewModel
@@ -62,6 +65,13 @@ class MonitoringAccessRecords : Fragment() {
         }
 
 
+        val callback = object : OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+                findNavController().navigate(R.id.action_AccessRecords_to_monitorFragment)
+            }
+        }
+
+        requireActivity().onBackPressedDispatcher.addCallback (callback)
 
         return binding.root
     }

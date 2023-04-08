@@ -22,6 +22,7 @@ import com.example.privasee.database.viewmodel.RestrictionViewModel
 import com.example.privasee.database.viewmodel.UserViewModel
 import com.example.privasee.databinding.FragmentUserInfoUpdateBinding
 import com.example.privasee.ui.userList.userInfoUpdate.UserInfoUpdateAdapter
+import com.example.privasee.ui.users.addUser.AddUserCapturePhoto
 //import com.example.privasee.ui.userList.userInfoUpdate.userAppControl.UserAppControllingActivity
 //import com.example.privasee.ui.userList.userInfoUpdate.userAppMonitoring.UserAppMonitoringActivity
 import com.example.privasee.ui.users.userInfoUpdate.userAppControl.UserAppControllingActivity
@@ -62,6 +63,7 @@ class UserInfoUpdateFragment : Fragment(), MenuProvider {
 
         if (userIsOwner) { // hide controlled apps for owner and send monitored app list
             val restrictionList = "Monitored App List"
+            binding.reEnroll.isVisible = true
             binding.tvRestrictionType.text = restrictionList
             binding.btnUserSetControlled.isVisible = false
             job1 = lifecycleScope.launch(Dispatchers.Main) {
@@ -73,6 +75,7 @@ class UserInfoUpdateFragment : Fragment(), MenuProvider {
         else { // hide monitored apps for non-owner and send controlled app list
             val restrictionList = "Controlled App List"
             binding.tvRestrictionType.text = restrictionList
+            binding.reEnroll.isVisible = false
             binding.btnUserSetMonitored.isVisible = false
             job2 = lifecycleScope.launch(Dispatchers.Main) {
                 mRestrictionViewModel.getAllControlledApps(userId).observe(viewLifecycleOwner) {
@@ -97,21 +100,27 @@ class UserInfoUpdateFragment : Fragment(), MenuProvider {
             }
         }
 
+        binding.reEnroll.setOnClickListener {
+            val intent = Intent(requireContext(), AddUserCapturePhoto::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(intent)
+        }
+
         binding.btnUserUpdateSave.setOnClickListener {
             updateItem()
-            findNavController().navigate(R.id.action_updateUserFragment_to_userFragment)
+          //  getFragmentManager()?.popBackStackImmediate()
+                findNavController().navigate(R.id.action_updateUserFragment_to_userFragment)
         }
 
 
         val callback = object : OnBackPressedCallback(true){
             override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.action_addUserFragment_to_userFragment)
+                findNavController().navigate(R.id.action_updateUserFragment_to_userFragment)
             }
         }
 
         requireActivity().onBackPressedDispatcher.addCallback (callback)
 
-        return binding.root
         return binding.root
     }
 

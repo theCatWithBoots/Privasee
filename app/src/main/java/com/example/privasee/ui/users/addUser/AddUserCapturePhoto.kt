@@ -8,6 +8,7 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.provider.Settings
 import android.util.Base64
 import android.util.Log
@@ -21,12 +22,10 @@ import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
 import com.chaquo.python.Python
 import com.chaquo.python.android.AndroidPlatform
 import com.example.privasee.R
-import com.example.privasee.database.model.Record
 import com.example.privasee.database.viewmodel.RecordViewModel
 import com.example.privasee.databinding.ActivityAddUserCapturePhotoBinding
 import com.example.privasee.ui.monitor.Constants
@@ -34,12 +33,10 @@ import kotlinx.android.synthetic.main.activity_add_user_capture_photo.*
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
-import java.lang.System.out
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
-import java.util.logging.Handler
 
 
 class AddUserCapturePhoto: AppCompatActivity() {
@@ -59,6 +56,16 @@ class AddUserCapturePhoto: AppCompatActivity() {
         setContentView(binding.root)
         outputDirectory = getOutputDirectory()
         cameraExecutor = Executors.newSingleThreadExecutor()
+
+
+        val dir = File("$outputDirectory/face recognition")
+
+        if (dir.isDirectory) {
+            val children = dir.list()
+            for (i in children.indices) {
+                File(dir, children[i]).delete()
+            }
+        }
 
         binding.addUserCaptureButton.isEnabled = false
         if (allPermissionGranted()) {
@@ -101,8 +108,8 @@ class AddUserCapturePhoto: AppCompatActivity() {
 
                 else -> {
                     goToSettings()
-                    finish()
-                    startActivity(getIntent());
+                   // finish()
+                    //startActivity(getIntent());
                 }
             }
         }
@@ -157,7 +164,7 @@ class AddUserCapturePhoto: AppCompatActivity() {
             .format(System
                 .currentTimeMillis()) + ".jpg"
 
-      //  var fileName = "$counter.jpg"
+      // var fileName = "$counter.jpg"
 
         val photoFile = File(
             "$fullpath",fileName)
@@ -289,7 +296,7 @@ class AddUserCapturePhoto: AppCompatActivity() {
 
         val file = File("$pathFd", imageStringSplit)
 
-        if((sp.getString("ownerPic", "none")) == "none") {
+        if(counter == 1) {
 
             editor.apply() {
                 putString("ownerPic",file.toString() )
@@ -324,6 +331,13 @@ class AddUserCapturePhoto: AppCompatActivity() {
 
             if(counter == 20){
                 loadingDialog.dismissDialog()
+                val sp = PreferenceManager.getDefaultSharedPreferences(this)
+                val editor = sp.edit()
+
+                editor.apply() {
+                    putBoolean("isEnrolled",true )
+                }.apply()
+
                 this.finish()
             }
 

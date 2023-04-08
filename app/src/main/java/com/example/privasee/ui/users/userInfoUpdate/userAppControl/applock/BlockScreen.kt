@@ -1,9 +1,11 @@
 package com.example.privasee.ui.users.userInfoUpdate.userAppControl.applock
 
+import android.content.Intent
 import android.graphics.PixelFormat
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.WindowManager
+import com.example.privasee.AppAccessService
 import com.example.privasee.databinding.ActivityBlockScreenBinding
 
 class BlockScreen : AppCompatActivity() {
@@ -25,6 +27,7 @@ class BlockScreen : AppCompatActivity() {
             type = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
 
         })
+
 
     }
 

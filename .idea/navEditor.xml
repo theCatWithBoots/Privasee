@@ -474,8 +474,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="-209" />
-                            <option name="y" value="359" />
+                            <option name="x" value="-12" />
+                            <option name="y" value="515" />
                           </Point>
                         </option>
                         <option name="myPositions">
@@ -495,23 +495,13 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="-177" />
-                            <option name="y" value="-69" />
+                            <option name="x" value="-192" />
+                            <option name="y" value="-62" />
                           </Point>
                         </option>
                         <option name="myPositions">
                           <map>
                             <entry key="action_monitorFragment_to_AccessRecords">
-                              <value>
-                                <LayoutPositions />
-                              </value>
-                            </entry>
-                            <entry key="action_monitorFragment_to_monitorFragmenTimedSnapshots">
-                              <value>
-                                <LayoutPositions />
-                              </value>
-                            </entry>
-                            <entry key="action_monitorFragment_to_monitorFragmentAppSnapshots">
                               <value>
                                 <LayoutPositions />
                               </value>
