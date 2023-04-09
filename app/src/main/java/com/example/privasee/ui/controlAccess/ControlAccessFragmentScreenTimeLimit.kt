@@ -60,12 +60,13 @@ class ControlAccessFragmentScreenTimeLimit : Fragment() {
             val active = devicePolicyManager!!.isAdminActive(compName!!)
             var timerString = timeButton.getText().toString()
 
-            if (active && timerString != "select time") {
+            if (active && !( timerString.equals("select time", ignoreCase = true))) {
 
                 editor.apply() {
                     putBoolean("IS_ACTIVITY_RUNNING", true)
                 }.apply()
 
+                Toast.makeText(requireContext(), "Timer has been started", Toast.LENGTH_LONG).show()
 
                 val units = timerString.split(":".toRegex()).dropLastWhile { it.isEmpty() }
                     .toTypedArray() //will break the string up into an array
@@ -78,13 +79,11 @@ class ControlAccessFragmentScreenTimeLimit : Fragment() {
 
                 var timerInt = duration.toLong()
 
-                timeSet.setText("Timer has been set")
-
                 requireActivity().startForegroundService(
                     Intent(context, MyForegroundServices::class.java)
                         .putExtra("screenTimer",timerInt))
 
-            } else if(active && timerString == "select time"){
+            } else if(active && ( timerString.equals("select time", ignoreCase = true))){
                 Toast.makeText(
                     requireContext(),
                     "You need to set Timer first",
@@ -93,8 +92,6 @@ class ControlAccessFragmentScreenTimeLimit : Fragment() {
             }
 
             else {
-                timeSet.setText("You need to enable Admin Permission first")
-
                 Toast.makeText(
                     requireContext(),
                     "You need to enable the Admin Device Features",
@@ -109,7 +106,9 @@ class ControlAccessFragmentScreenTimeLimit : Fragment() {
                 putBoolean("IS_ACTIVITY_RUNNING", false)
             }.apply()
 
-            timeSet.setText("Timer is not set")
+            remainingTime.setText("Timer is not set")
+
+            Toast.makeText(requireContext(), "Timer has been stopped", Toast.LENGTH_LONG).show()
 
                 requireActivity().stopService(
                     Intent(context, MyForegroundServices::class.java))

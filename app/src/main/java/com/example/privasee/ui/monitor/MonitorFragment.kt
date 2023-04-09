@@ -9,6 +9,7 @@ import android.provider.Settings
 import android.text.InputType
 import android.view.*
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -35,6 +36,31 @@ class MonitorFragment : Fragment() {
     ): View? {
         _binding = FragmentMonitorBinding.inflate(inflater, container, false)
 
+        val callback = object : OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+               val eBuilder = AlertDialog.Builder(requireContext())
+
+                eBuilder.setTitle("Exit")
+
+                eBuilder.setIcon(R.drawable.ic_action_name)
+
+                eBuilder.setMessage("Are you sure you want to Exit?")
+                eBuilder.setPositiveButton("Yes"){
+                    Dialog, which ->
+                    activity?.finish()
+                }
+                eBuilder.setNegativeButton("No"){
+                    Dialog,which->
+
+                }
+
+                val createBuild = eBuilder.create()
+                createBuild.show()
+
+            }
+        }
+
+        requireActivity().onBackPressedDispatcher.addCallback (callback)
 
         return binding.root
     }
@@ -75,11 +101,6 @@ class MonitorFragment : Fragment() {
                Toast.makeText(requireContext(), "Please input Threshold", Toast.LENGTH_SHORT).show()
            }
        }
-
-
-
-
-
 
     }
     private fun checkForPermissions(permission: String, name: String, requestCode: Int){ //if not granted, it asks for permission

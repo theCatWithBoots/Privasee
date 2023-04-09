@@ -4,22 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.controlAccess.SetupOwnerFragment">
+    tools:context=".ui.initialRun.SetupOwnerFragment">
 
-    <TextView
-        android:id="@+id/tvOwner"
-        android:layout_width="350dp"
-        android:layout_height="300dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginEnd="30dp"
-        android:fontFamily="@font/open_sans"
-        android:text="@string/lorem_ipsum"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btnOwnerRegisterFace"
@@ -27,9 +13,12 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:text="Enroll Face"
-        app:layout_constraintEnd_toEndOf="@+id/etSetName"
-        app:layout_constraintStart_toStartOf="@+id/etSetName"
-        app:layout_constraintTop_toBottomOf="@+id/etSetName" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.566" />
 
     <Button
         android:id="@+id/btnSetupOwnerFinish"
@@ -45,13 +34,15 @@
         android:id="@+id/etSetName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
         android:ems="10"
+        android:hint="Name"
         android:inputType="textPersonName"
         android:minHeight="48dp"
-        android:hint="Name"
-        app:layout_constraintEnd_toEndOf="@+id/tvOwner"
-        app:layout_constraintStart_toStartOf="@+id/tvOwner"
-        app:layout_constraintTop_toBottomOf="@+id/tvOwner" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.478" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,8 +4,10 @@ import android.content.Intent
 import android.os.CountDownTimer
 import android.os.IBinder
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.LifecycleService
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import androidx.preference.PreferenceManager
 import com.example.privasee.ui.users.userInfoUpdate.userAppControl.applock.BlockScreen
 import com.example.privasee.ui.users.userInfoUpdate.userAppControl.applock.BlockScreen2
 import java.util.concurrent.TimeUnit
@@ -19,13 +21,24 @@ class AppLockTimer :  LifecycleService() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
 
-       // val sp = PreferenceManager.getDefaultSharedPreferences(this)
 
-      //  if(sp.getBoolean("isLockerActive", false))
         val timer = (intent?.getStringExtra("Timer"))?.toInt()
         val packageNames = (intent?.getStringArrayListExtra("controlledAppPackageNames"))
 
-        startTimer(timer!!, packageNames)
+        val sp = PreferenceManager.getDefaultSharedPreferences(this@AppLockTimer)
+        val editor = sp.edit()
+
+
+
+        if(!(sp.getBoolean("IS_TIMER_RUNNING", false))) {
+
+            editor.apply() {
+                putBoolean("IS_TIMER_RUNNING", true)
+            }.apply()
+
+            startTimer(timer!!, packageNames)
+        }
+
 
         return super.onStartCommand(intent, flags, startId)
     }
@@ -42,21 +55,26 @@ class AppLockTimer :  LifecycleService() {
                //mTimeLeftInMillis = millisUntilFinished
                // updateCountDownText()
 
-                    Log.i("TAG","Countdown seconds remaining:" + millisUntilFinished / 1000);
+                val sp = PreferenceManager.getDefaultSharedPreferences(this@AppLockTimer)
+                val editor = sp.edit()
 
+                if( sp.getBoolean("IS_APPLOCK_TIMER_RUNNING", false)){
+                    Log.i("TAG","Countdown seconds remaining:" + millisUntilFinished / 1000);
                     intent.putExtra("countdown",millisUntilFinished)
                     sendBroadcastMessage(intent)
+                }else{
+                    editor.apply() {
+                        putBoolean("IS_TIMER_RUNNING", false)
+                    }.apply()
+
+                    mCountDownTimer?.cancel() //stop timer
+                    }
 
             }
 
             override fun onFinish() {
 
                 mTimerRunning = false
-
-            /*    val intent = Intent(this@AppLockTimer, AppAccessService::class.java)
-                intent.putExtra("action", "addLock")
-                intent.putStringArrayListExtra("packageNames", ArrayList(packageNames))
-                this@AppLockTimer.startService(intent)*/
 
                 val intent = Intent(this@AppLockTimer, BlockScreen2::class.java)
                 intent.putStringArrayListExtra("packageNames", ArrayList(packageNames))

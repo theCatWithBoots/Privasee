@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.view.*
 import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.AlertDialog
 import androidx.camera.core.impl.utils.ContextUtil.getApplicationContext
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -46,6 +47,32 @@ class UserListFragment : Fragment() {
         binding.btnAddUser.setOnClickListener {
             findNavController().navigate(R.id.action_userFragment_to_addUserFragment)
         }
+
+        val callback = object : OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+                val eBuilder = AlertDialog.Builder(requireContext())
+
+                eBuilder.setTitle("Exit")
+
+                eBuilder.setIcon(R.drawable.ic_action_name)
+
+                eBuilder.setMessage("Are you sure you want to Exit?")
+                eBuilder.setPositiveButton("Yes"){
+                        Dialog, which ->
+                    activity?.finish()
+                }
+                eBuilder.setNegativeButton("No"){
+                        Dialog,which->
+
+                }
+
+                val createBuild = eBuilder.create()
+                createBuild.show()
+
+            }
+        }
+
+        requireActivity().onBackPressedDispatcher.addCallback (callback)
 
         return binding.root
     }

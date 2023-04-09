@@ -8,6 +8,8 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toolbar
+import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -17,7 +19,6 @@ import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.NavigationUI.setupActionBarWithNavController
 import com.example.privasee.R
 import com.example.privasee.databinding.FragmentMonitorStartBinding
-import com.example.privasee.ui.monitor.gallery.SeeSnapshots
 import kotlinx.android.synthetic.main.fragment_monitor_start.*
 
 class MonitorStart : Fragment() {
@@ -32,6 +33,31 @@ class MonitorStart : Fragment() {
     ): View? {
         _binding = FragmentMonitorStartBinding.inflate(inflater, container, false)
 
+        val callback = object : OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+                val eBuilder = AlertDialog.Builder(requireContext())
+
+                eBuilder.setTitle("Exit")
+
+                eBuilder.setIcon(R.drawable.ic_action_name)
+
+                eBuilder.setMessage("Are you sure you want to Exit?")
+                eBuilder.setPositiveButton("Yes"){
+                        Dialog, which ->
+                    activity?.finish()
+                }
+                eBuilder.setNegativeButton("No"){
+                        Dialog,which->
+
+                }
+
+                val createBuild = eBuilder.create()
+                createBuild.show()
+
+            }
+        }
+
+        requireActivity().onBackPressedDispatcher.addCallback (callback)
 
         return binding.root
     }

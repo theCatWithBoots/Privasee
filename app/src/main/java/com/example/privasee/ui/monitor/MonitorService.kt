@@ -65,6 +65,7 @@ class MonitorService :  LifecycleService() {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
 
         outputDirectory = getOutputDirectory()
+        outputDirectory = File(".$outputDirectory")
         cameraExecutor = Executors.newSingleThreadExecutor()
 
         if (intent != null) {
@@ -124,11 +125,11 @@ class MonitorService :  LifecycleService() {
                     val savedUri = Uri.fromFile(photoFile)
                     val msg = "Photo Saved"
 
-                    Toast.makeText(
+                /*    Toast.makeText(
                         this@MonitorService,
                         "$msg $savedUri",
                         Toast.LENGTH_LONG).
-                    show()
+                    show()*/
 
                   faceDetection(photoFile.toString())
 
@@ -162,7 +163,7 @@ class MonitorService :  LifecycleService() {
         if(str == "No face detected"){
            // val imageStringSplit = string.substring(string.lastIndexOf("/")+1); //split file path, take last(file)
 
-            Toast.makeText(this, "No face detected", Toast.LENGTH_LONG).show()
+           // Toast.makeText(this, "No face detected", Toast.LENGTH_LONG).show()
 
             val intent = Intent(this, DbQueryIntentService::class.java)
             intent.putExtra("image", string)
@@ -236,7 +237,7 @@ class MonitorService :  LifecycleService() {
             threshold
         ) //call main method project_testing
 
-        Toast.makeText(this, "$objFinal", Toast.LENGTH_LONG).show()
+      //  Toast.makeText(this, "$objFinal", Toast.LENGTH_LONG).show()
 
         val intent = Intent(this, DbQueryIntentService::class.java)
         intent.putExtra("image", stringImage)
@@ -278,13 +279,13 @@ class MonitorService :  LifecycleService() {
         try {
             val out = FileOutputStream(file)
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out)
-            Toast.makeText(this, "Successfuly Saved", Toast.LENGTH_SHORT).show()
+      //      Toast.makeText(this, "Successfuly Saved", Toast.LENGTH_SHORT).show()
             //faceRecognition(string)
             out.flush()
             out.close()
         } catch (e: java.lang.Exception) {
             e.printStackTrace()
-            Toast.makeText(this, "Fuck cant be Saved", Toast.LENGTH_SHORT).show()
+      //      Toast.makeText(this, "Fuck cant be Saved", Toast.LENGTH_SHORT).show()
         }
 
     }

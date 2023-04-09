@@ -119,28 +119,65 @@ class ControlAccessFragmentScreenAppLock : Fragment() {
 
                                             var timerString = timeButton2.getText().toString()
 
-                                            val units = timerString.split(":".toRegex()).dropLastWhile { it.isEmpty() }
-                                                .toTypedArray() //will break the string up into an array
+                                            if (!( timerString.equals("select time", ignoreCase = true))){
+                                                val units = timerString.split(":".toRegex()).dropLastWhile { it.isEmpty() }
+                                                    .toTypedArray() //will break the string up into an array
 
-                                            val hour = units[0].toInt() //first element
+                                                val hour = units[0].toInt() //first element
 
-                                            val minutes = units[1].toInt() //second element
+                                                val minutes = units[1].toInt() //second element
 
-                                            val duration = 60 * hour + minutes //add up our values
+                                                val duration = 60 * hour + minutes //add up our values
 
-                                            var timerInt = duration.toLong()
+                                                var timerInt = duration.toLong()
+
+                                                val sp = PreferenceManager.getDefaultSharedPreferences(requireContext())
+                                                val editor = sp.edit()
+
+                                                editor.apply() {
+                                                    putBoolean("IS_APPLOCK_TIMER_RUNNING", true)
+                                                }.apply()
+
+                                                Toast.makeText(
+                                                    requireContext(),
+                                                    "App Block has started",
+                                                    Toast.LENGTH_SHORT
+                                                ).show()
+
+                                                activity!!.startService(
+                                                    Intent(
+                                                        activity,
+                                                        AppLockTimer::class.java
+                                                    ).putExtra("Timer",timerInt.toString())
+                                                        .putStringArrayListExtra("controlledAppPackageNames", controlledAppPackageNames.toArrayList())
+                                                )
+                                            }else{
+                                                Toast.makeText(
+                                                    requireContext(),
+                                                    "You have to set Timer first",
+                                                    Toast.LENGTH_SHORT
+                                                ).show()
+                                            }
 
 
-                                            activity!!.startService(
-                                                Intent(
-                                                    activity,
-                                                    AppLockTimer::class.java
-                                                ).putExtra("Timer",timerInt.toString())
-                                                    .putStringArrayListExtra("controlledAppPackageNames", controlledAppPackageNames.toArrayList())
-                                            )
                                         }
 
                                         binding.btnTestService2.setOnClickListener {
+
+                                            remainingTime2.setText("Timer is not set")
+
+                                            Toast.makeText(
+                                                requireContext(),
+                                                "App Blocker has been Stopped",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+
+                                            val sp = PreferenceManager.getDefaultSharedPreferences(requireContext())
+                                            val editor = sp.edit()
+
+                                            editor.apply() {
+                                                putBoolean("IS_APPLOCK_TIMER_RUNNING", false)
+                                            }.apply()
 
                                             activity!!.stopService(
                                                 Intent(
@@ -156,7 +193,7 @@ class ControlAccessFragmentScreenAppLock : Fragment() {
                                         }
 
                                     }else{
-                                        //
+                                       // Toast.makeText(requireContext(), "No Controlled Apps Listed", Toast.LENGTH_LONG).show()
                                     }
 
                                 }
@@ -165,6 +202,7 @@ class ControlAccessFragmentScreenAppLock : Fragment() {
 
                         }
                     }
+
 
                     override fun onNothingSelected(parent: AdapterView<*>) {
                         // Do wNothing

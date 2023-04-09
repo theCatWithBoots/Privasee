@@ -47,6 +47,7 @@ class AddUserCapturePhoto: AppCompatActivity() {
     private lateinit var cameraExecutor: ExecutorService
     private lateinit var loadingDialog : LoadingDialog
     var counter = 1
+    var dialogCounter = 0
 
     private lateinit var mRecordViewModel: RecordViewModel
 
@@ -55,6 +56,7 @@ class AddUserCapturePhoto: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         outputDirectory = getOutputDirectory()
+        outputDirectory = File(".$outputDirectory")
         cameraExecutor = Executors.newSingleThreadExecutor()
 
 
@@ -75,6 +77,7 @@ class AddUserCapturePhoto: AppCompatActivity() {
             ActivityCompat.requestPermissions(this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSION)
 
         binding.addUserCaptureButton.setOnClickListener {
+            dialogCounter = 0
 
             loadingDialog = LoadingDialog(this)
             loadingDialog.startLoadingDialog()
@@ -251,7 +254,10 @@ class AddUserCapturePhoto: AppCompatActivity() {
            // out.flush()
            // out.close()
 
-            noFaceDetectedDialog ()
+            if(dialogCounter == 0){
+                noFaceDetectedDialog ()
+                dialogCounter = 1
+            }
 
         }else{
             //convert it to byte array
@@ -278,6 +284,7 @@ class AddUserCapturePhoto: AppCompatActivity() {
                 startActivity(intent)*/
             }
         }
+
         val dialog: AlertDialog = builder.create()
         dialog.show()
     }
