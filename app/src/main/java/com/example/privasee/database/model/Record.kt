@@ -15,7 +15,6 @@ data class Record(
     val month: Int,
     val year: Int,
     val time : Long,
-    val status: String,
     val image: String,
     val packageName : String
 ): Parcelable

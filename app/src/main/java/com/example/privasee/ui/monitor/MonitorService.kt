@@ -169,7 +169,7 @@ class MonitorService :  LifecycleService() {
             intent.putExtra("image", string)
             intent.putExtra("query", "insertRecord")
             intent.putExtra("appName", appname)
-            intent.putExtra("status", "No face Detected")
+          //  intent.putExtra("status", "No face Detected")
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
             ContextCompat.startForegroundService(this, intent)
             isSnapshotDone = true
@@ -182,7 +182,7 @@ class MonitorService :  LifecycleService() {
             val bmp = BitmapFactory.decodeByteArray(data, 0, data.size)
 
 
-            createDirectoryAndSaveFile(bmp, string)
+           // createDirectoryAndSaveFile(bmp, string)
             faceRecognition(bmp, string)
         }
 
@@ -239,20 +239,33 @@ class MonitorService :  LifecycleService() {
 
       //  Toast.makeText(this, "$objFinal", Toast.LENGTH_LONG).show()
 
-        val intent = Intent(this, DbQueryIntentService::class.java)
-        intent.putExtra("image", stringImage)
-        intent.putExtra("query", "insertRecord")
-        intent.putExtra("appName", appname)
-        intent.putExtra("status", objFinal.toString())
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-        ContextCompat.startForegroundService(this, intent)
-        isSnapshotDone = true
-        this.stopSelf()
+       if(!objFinal.toBoolean()){
 
-            val editor = sp.edit()
-            editor.apply(){
-                putBoolean("result", objFinal.toBoolean())
-            }.apply()
+           val intent = Intent(this, DbQueryIntentService::class.java)
+           intent.putExtra("image", stringImage)
+           intent.putExtra("query", "insertRecord")
+           intent.putExtra("appName", appname)
+          // intent.putExtra("status", objFinal.toString())
+           intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+           ContextCompat.startForegroundService(this, intent)
+           isSnapshotDone = true
+           this.stopSelf()
+
+           val editor = sp.edit()
+           editor.apply(){
+               putBoolean("result", objFinal.toBoolean())
+           }.apply()
+       }else{
+           var file = File(stringImage)
+           file.delete()
+
+           isSnapshotDone = true
+           this.stopSelf()
+           val editor = sp.edit()
+           editor.apply(){
+               putBoolean("result", objFinal.toBoolean())
+           }.apply()
+       }
 
        // isSnapshotDone = true
 

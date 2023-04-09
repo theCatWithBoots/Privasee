@@ -37,7 +37,7 @@ class MonitorAccessRecordsAdapter(): RecyclerView.Adapter<MonitorAccessRecordsAd
             val year = currentRecord.year
             val appName = currentRecord.packageName
             val time = currentRecord.time
-            val status = currentRecord.status
+         //   val status = currentRecord.status
             val imageString = currentRecord.image
 
           /*  //convert it to byte array
@@ -59,7 +59,7 @@ class MonitorAccessRecordsAdapter(): RecyclerView.Adapter<MonitorAccessRecordsAd
                 tvRecordsDate.text = dateFormat
                 tvRecordsTime.text = timeString
                 tvRecordsAppName.text = appName
-                tvRecordsStatus.text = status
+             //   tvRecordsStatus.text = status
                 tvImageView.setImageBitmap(bitmap)
             }
         } else {
@@ -68,7 +68,7 @@ class MonitorAccessRecordsAdapter(): RecyclerView.Adapter<MonitorAccessRecordsAd
             holder.binding.apply {
                 tvRecordsDate.text = emptyString
                 tvRecordsTime.text = emptyString
-                tvRecordsAppName.text = tempString
+             //   tvRecordsAppName.text = tempString
                 tvRecordsStatus.text = emptyString
             }
         }

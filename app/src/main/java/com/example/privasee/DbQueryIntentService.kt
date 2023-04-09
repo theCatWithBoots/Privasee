@@ -58,13 +58,13 @@ class DbQueryIntentService : IntentService("TestIntentService") {
             val time = calendar.timeInMillis
 
             val appName = intent.getStringExtra("appName")
-            val status = intent.getStringExtra("status").toString()
+       //     val status = intent.getStringExtra("status").toString()
             val fileLocation = intent.getStringExtra("image").toString() //file location
         //    val bitmap = BitmapFactory.decodeFile(intent.getStringExtra("image").toString())
            // val snapshotImage = getStringImage(bitmap)
 
             mRecordViewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(application).create(RecordViewModel::class.java)
-            val record = appName?.let { Record(0, day, month, year, time, status, fileLocation, it) }
+            val record = appName?.let { Record(0, day, month, year, time, fileLocation, it) }
             Log.d("tagimandos", "dbqueryintent service $record")
 
             if (record != null)

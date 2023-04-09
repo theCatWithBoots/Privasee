@@ -57,7 +57,7 @@ class MonitoringAccessRecords : Fragment() {
                         adapter.setData(it)
                     } else {
                         Log.d("tagimandos", "Empty list")
-                        val tempRecord = listOf(Record(0,0,0,0,0, "", "", "Empty Record"))
+                        val tempRecord = listOf(Record(0,0,0,0,0, "", "Empty Record"))
                         adapter.setData(tempRecord)
                     }
                 }
